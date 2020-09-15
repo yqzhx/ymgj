@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.system.student.mapper.StudentPersonnelMapper">
+
+    <resultMap type="StudentPersonnel" id="StudentPersonnelResult">
+        <id property="stuUserId" column="stu_user_id"/>
+        <result property="stuDeptId" column="stu_dept_id"/>
+        <result property="stuLoginName" column="stu_login_name"/>
+        <result property="stuUserName" column="stu_user_name"/>
+        <result property="stuEmail" column="stu_email"/>
+        <result property="stuPhonenumber" column="stu_phonenumber"/>
+        <result property="stuSex" column="stu_sex"/>
+        <result property="stuAvatar" column="stu_avatar"/>
+        <result property="stuPassword" column="stu_password"/>
+        <result property="stuSalt" column="stu_salt"/>
+        <result property="stuStatus" column="stu_status"/>
+        <result property="stuDelFlag" column="stu_del_flag"/>
+        <result property="stuLoginIp" column="stu_login_ip"/>
+        <result property="stuLoginDate" column="stu_login_date"/>
+        <result property="stuCreateBy" column="stu_create_by"/>
+        <result property="stuCreateTime" column="stu_create_time"/>
+        <result property="stuUpdateBy" column="stu_update_by"/>
+        <result property="stuUpdateTime" column="stu_update_time"/>
+        <result property="stuRemark" column="stu_remark"/>
+        <result property="stuBirthday" column="stu_birthday"/>
+        <result property="stuQQ" column="stu_QQ"/>
+        <association property="dept" column="dept_id" javaType="Dept" resultMap="deptResult"/>
+        <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
+    </resultMap>
+
+    <resultMap id="StudentClassResult" type="StudentClass">
+        <id property="stuDeptId" column="stu_dept_id"/>
+        <result property="stuParentId" column="stu_parent_id"/>
+        <result property="stuDeptName" column="stu_dept_name"/>
+        <result property="stuOrderNum" column="stu_order_num"/>
+        <result property="stuStatus" column="stu_dept_status"/>
+    </resultMap>
+
+    <resultMap id="RoleResult" type="Role">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleKey" column="role_key"/>
+        <result property="roleSort" column="role_sort"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="status" column="role_status"/>
+    </resultMap>
+
+    <sql id="selectUserVo">
+        select u.stu_user_id,
+               u.stu_dept_id,
+               u.stu_login_name,
+               u.stu_user_name,
+               u.stu_email,
+               u.stu_phonenumber,
+               u.stu_sex,
+               u.stu_avatar,
+               u.stu_password,
+               u.stu_salt,
+               u.stu_status,
+               u.stu_del_flag,
+               u.stu_login_ip,
+               u.stu_login_date,
+               u.stu_create_time,
+               u.stu_update_time,
+               u.stu_remark,
+               d.stu_dept_id,
+               d.stu_parent_id,
+               d.stu_dept_name,
+               d.stu_order_num,
+               d.stu_status as dept_status,
+               r.role_id,
+               r.role_name,
+               r.role_key,
+               r.role_sort,
+               r.data_scope,
+               r.status as role_status,
+               u.stu_birthday,
+               u.stu_QQ
+        from student_personnel u
+                 left join student_class d on u.stu_dept_id = d.stu_dept_id
+    </sql>
+
+    <select id="selectStudentPersonnelList" parameterType="StudentPersonnel" resultMap="StudentPersonnelResult">
+        select u.stu_user_id, u.stu_dept_id, u.stu_login_name, u.stu_user_name, u.stu_email, u.stu_phonenumber, u.stu_password,
+        u.stu_sex, u.stu_avatar, u.stu_salt, u.stu_status, u.stu_del_flag, u.stu_login_ip, u.stu_login_date, u.stu_create_by,
+        u.stu_create_time,u.stu_update_by,u.stu_update_time, u.stu_remark, d.stu_dept_name from student_personnel u
+        left join student_class d on u.stu_dept_id = d.stu_dept_id
+        <where>u.stu_del_flag = '0'
+            <if test="stuLoginName != null and stuLoginName != ''">
+                AND u.stu_login_name like concat('%',
+                #{stuLoginName},
+                '%'
+                )
+            </if>
+            <if test="stuStatus != null and stuStatus != ''">
+                AND u.stu_status =
+                #{stuStatus}
+            </if>
+            <if test="stuPhonenumber != null and stuPhonenumber != ''">
+                AND u.stu_phonenumber like concat('%',
+                #{stuPhonenumber},
+                '%'
+                )
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(u.stu_create_time,'%y%m%d') &gt;= date_format(
+                #{params.beginTime},
+                '%y%m%d'
+                )
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(u.stu_create_time,'%y%m%d') &lt;= date_format(
+                #{params.endTime},
+                '%y%m%d'
+                )
+            </if>
+            <if test="stuDeptId != null and stuDeptId != 0">
+                AND
+                (u.stu_dept_id = #{stuDeptId} OR u.stu_dept_id IN (SELECT t.stu_dept_id FROM student_class t WHERE FIND_IN_SET (#{stuDeptId},ancestors)))
+            </if>
+        </where>
+        order by u.stu_update_time desc
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
+    <select id="selectUserByLoginName" parameterType="String" resultMap="StudentPersonnelResult">
+        <include refid="selectUserVo"/>
+        where u.stu_login_name = #{stuUserName} and u.stu_del_flag = '0'
+    </select>
+
+    <select id="selectUserNameByLoginName" resultMap="StudentPersonnelResult">
+        select stu_user_name, stu_login_name from student_personnel
+    </select>
+
+    <select id="selectUserNameByLoginNameByType" resultMap="StudentPersonnelResult" parameterType="Integer">
+        select user_name, login_name from enterprises
+        <where>
+            <if test="type != null ">
+                and type = #{type}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectUserByPhoneNumber" parameterType="String" resultMap="StudentPersonnelResult">
+        <include refid="selectUserVo"/>
+        where u.phonenumber = #{phonenumber} and u.del_flag = '0'
+    </select>
+
+    <select id="selectUserByEmail" parameterType="String" resultMap="StudentPersonnelResult">
+        <include refid="selectUserVo"/>
+        where u.email = #{email} and u.del_flag = '0'
+    </select>
+
+    <select id="checkLoginNameUnique" parameterType="String" resultType="int">
+        select count(1)
+        from sys_user
+        where login_name = #{loginName}
+          and del_flag = '0'
+    </select>
+
+    <select id="checkPhoneUnique" parameterType="String" resultMap="StudentPersonnelResult">
+        select user_id, phonenumber
+        from sys_user
+        where phonenumber = #{phonenumber}
+          and del_flag = '0'
+    </select>
+
+    <select id="checkEmailUnique" parameterType="String" resultMap="StudentPersonnelResult">
+        select user_id, email
+        from sys_user
+        where email = #{email}
+          and del_flag = '0'
+    </select>
+
+    <select id="selectUserById" parameterType="Long" resultMap="StudentPersonnelResult">
+        <include refid="selectUserVo"/>
+        where u.user_id = #{userId}
+    </select>
+
+    <select id="selectMfrsAccountByLoginName" parameterType="StudentPersonnel" resultMap="StudentPersonnelResult">
+        select phonenumber, user_name
+        from mfrs_account
+        where login_name = #{stuUserName}
+    </select>
+
+    <update id="updateUser" parameterType="StudentPersonnel">
+        update sys_user
+        <set>
+            <if test="deptId != null and deptId != 0">dept_id =
+            #{deptId},</if>
+            <if test="loginName != null ">login_name =
+            #{loginName},</if>
+            <if test="userName != null ">user_name =
+            #{userName},</if>
+            <if test="email != null ">email =
+            #{email},</if>
+            <if test="phonenumber != null ">phonenumber =
+            #{phonenumber},</if>
+            <if test="sex != null ">sex =
+            #{sex},</if>
+            <if test="avatar != null ">avatar =
+            #{avatar},</if>
+            <if test="password != null">password =
+            #{password},</if>
+            <if test="salt != null ">salt =
+            #{salt},</if>
+            <if test="status != null ">status =
+            #{status},</if>
+            <if test="loginIp != null">login_ip =
+            #{loginIp},</if>
+            <if test="loginDate != null">login_date =
+            #{loginDate},</if>
+            <if test="updateBy != null ">update_by =
+            #{updateBy},</if>
+            <if test="remark != null ">remark =
+            #{remark},</if>
+            <if test="delFlag != null ">del_flag =
+            #{delFlag},</if>
+            <if test="birthday != null ">birthday =
+            #{birthday},</if>
+            <if test="QQ != null ">QQ =
+            #{QQ},</if>
+            update_time = sysdate()
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <insert id="insertUser" parameterType="StudentPersonnel" useGeneratedKeys="true" keyProperty="userId">
+        insert into sys_user(
+        <if test="userId != null and userId != 0">user_id,</if>
+        <if test="deptId != null and deptId != 0">dept_id,</if>
+        <if test="loginName != null and loginName != ''">login_name,</if>
+        <if test="userName != null and userName != ''">user_name,</if>
+        <if test="email != null and email != ''">email,</if>
+        <if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+        <if test="sex != null and sex != ''">sex,</if>
+        <if test="password != null and password != ''">password,</if>
+        <if test="salt != null and salt != ''">salt,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="birthday != null and birthday != ''">birthday,</if>
+        <if test="QQ != null and QQ != ''">QQ,</if>
+        create_time,
+        <if test="createBy != null and createBy != ''">update_by,</if>
+        update_time
+        )values(
+        <if test="userId != null and userId != ''">#{userId},</if>
+        <if test="deptId != null and deptId != ''">#{deptId},</if>
+        <if test="loginName != null and loginName != ''">#{loginName},</if>
+        <if test="userName != null and userName != ''">#{userName},</if>
+        <if test="email != null and email != ''">#{email},</if>
+        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+        <if test="sex != null and sex != ''">#{sex},</if>
+        <if test="password != null and password != ''">#{password},</if>
+        <if test="salt != null and salt != ''">#{salt},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="birthday != null and birthday != ''">#{birthday},</if>
+        <if test="QQ != null and QQ != ''">#{QQ},</if>
+        sysdate(),
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+    <select id="selectCountByClinicId" resultType="int">
+        select count(*)
+        from cdc_account
+        where clinic_id = #{stuClinicId}
+          and del_flag = 0
+    </select>
+
+</mapper> 

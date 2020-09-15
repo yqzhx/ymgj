@@ -146,6 +146,7 @@ public class DeptServiceImpl implements IDeptService
     @Override
     public int deleteDeptById(Long deptId)
     {
+
         return deptMapper.deleteDeptById(deptId);
     }
 
@@ -214,6 +215,7 @@ public class DeptServiceImpl implements IDeptService
     @Override
     public Dept selectDeptById(Long deptId)
     {
+
         return deptMapper.selectDeptById(deptId);
     }
 

@@ -14,11 +14,11 @@ import java.util.Objects;
 public class StudentPersonnel {
     /* 学生ID */
     @Id
-    private Integer stuUserId;
+    private Long stuUserId;
 
     /* 班级ID */
     @Column(name = "stu_dept_id")
-    private Integer stuDeptId;
+    private Long stuDeptId;
 
     /* 登录账号 */
     @Column(name = "stu_login_name")
@@ -106,19 +106,19 @@ public class StudentPersonnel {
     @Column(name = "stu_QQ")
     private String stuQQ;
 
-    public Integer getStuUserId() {
+    public Long getStuUserId() {
         return stuUserId;
     }
 
-    public void setStuUserId(Integer stuUserId) {
+    public void setStuUserId(Long stuUserId) {
         this.stuUserId = stuUserId;
     }
 
-    public Integer getStuDeptId() {
+    public Long getStuDeptId() {
         return stuDeptId;
     }
 
-    public void setStuDeptId(Integer stuDeptId) {
+    public void setStuDeptId(Long stuDeptId) {
         this.stuDeptId = stuDeptId;
     }
 
@@ -294,7 +294,7 @@ public class StudentPersonnel {
     public StudentPersonnel() {
     }
 
-    public StudentPersonnel(Integer stuUserId, Integer stuDeptId, String stuLoginName, String stuUserName, String stuUserType, String stuEmail, String stuPhonenumber, String stuSex, String stuAvatar, String stuPassword, String stuSalt, String stuStatus, String stuDelFlag, String stuLoginIp, Date stuLoginDate, String stuCreateBy, Date stuCreateTime, String stuUpdateBy, Date stuUpdateTime, String stuRemark, Date stuBirthday, String stuQQ) {
+    public StudentPersonnel(Long stuUserId, Long stuDeptId, String stuLoginName, String stuUserName, String stuUserType, String stuEmail, String stuPhonenumber, String stuSex, String stuAvatar, String stuPassword, String stuSalt, String stuStatus, String stuDelFlag, String stuLoginIp, Date stuLoginDate, String stuCreateBy, Date stuCreateTime, String stuUpdateBy, Date stuUpdateTime, String stuRemark, Date stuBirthday, String stuQQ) {
         this.stuUserId = stuUserId;
         this.stuDeptId = stuDeptId;
         this.stuLoginName = stuLoginName;

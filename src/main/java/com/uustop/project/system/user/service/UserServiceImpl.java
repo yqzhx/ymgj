@@ -63,6 +63,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User selectUserByLoginName(String userName) {
+
         return userMapper.selectUserByLoginName(userName);
     }
 
@@ -296,6 +297,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public List<User> selectUserNameByLoginName() {
+
         return userMapper.selectUserNameByLoginName();
     }
 

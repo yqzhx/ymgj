@@ -1,52 +1,90 @@
 package com.uustop.project.system.student.service;
 
+import com.uustop.project.system.dept.domain.Dept;
+import com.uustop.project.system.role.domain.Role;
 import com.uustop.project.system.student.domain.StudentClass;
+import com.uustop.project.system.student.domain.StudentPersonnel;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentClassService {
-    /*
-     * 添加学校、年级、班级信息
+    /**
+     * 查询组织机构管理数据
      *
-     * @param studentClass 要添加的标签信息
-     * */
-    void insertStudentClass(StudentClass studentClass);
+     * @param studentClass 组织机构信息
+     * @return 组织机构信息集合
+     */
+    public List<StudentClass> selectStudentClassList(StudentClass studentClass);
 
-    /*
-     * 根据标签ID删除标签信息
+    /**
+     * 查询组织机构管理树
      *
-     * @param studentClassId 标签ID
-     * */
-    void deleteClassByClassId(Integer studentClassId);
+     * @return 所有组织机构信息
+     */
+    public List<Map<String, Object>> selectStudentClassTree();
 
-    /*
-     * 根据标签ID修改标签信息
+    /**
+     * 根据角色ID查询菜单
      *
-     * @param studentClassId 标签ID
-     * */
-    void updateClassByClassId(StudentClass StudentClass);
+     * @param StudentPersonnel 角色对象
+     * @return 菜单列表
+     */
+    public List<Map<String, Object>> roleStudentClassTreeData(StudentPersonnel StudentPersonnel);
 
-    /*
-     * 根据标签ID查询
+    /**
+     * 查询组织机构人数
      *
-     * @param studentClassId 标签ID
-     * @return 返回一个标签对象
-     * */
-    StudentClass selectClassByClassId(Integer studentClassId);
+     * @param parentId 父组织机构ID
+     * @return 结果
+     */
+    public int selectSchoolClassCount(Long parentId);
 
-    /*
-     * 根据机构进行模糊查询
+    /**
+     * 查询组织机构是否存在用户
      *
-     * @param condition 接受到的查询条件
-     * @return 返回标签对象集合
-     * */
-    List<StudentClass> selectStudentClassByCondition(String condition);
+     * @param deptId 组织机构ID
+     * @return 结果 true 存在 false 不存在
+     */
+    public boolean checkStudentClassExistUser(Long deptId);
 
-    /*
-     * 根据stuDeptId查询该标签下的所有班级Id
+    /**
+     * 删除组织机构管理信息
      *
-     * @param stuDeptId 接收到的标签
-     * @return 返回一个Integer的stuDeptId的集合 表示所有的班级
-     * */
-    List<StudentClass> selectClassIdByStuDeptId(Integer stuDeptId);
+     * @param deptId 组织机构ID
+     * @return 结果
+     */
+    public int deleteStudentClassById(Long deptId);
+
+    /**
+     * 新增保存组织机构信息
+     *
+     * @param studentClass 组织机构信息
+     * @return 结果
+     */
+    public int insertDept(StudentClass studentClass);
+
+    /**
+     * 修改保存组织机构信息
+     *
+     * @param studentClass 组织机构信息
+     * @return 结果
+     */
+    public int updateStudentClass(StudentClass studentClass);
+
+    /**
+     * 根据组织机构ID查询信息
+     *
+     * @param deptId 组织机构ID
+     * @return 组织机构信息
+     */
+    public StudentClass selectStudentClassById(Long deptId);
+
+    /**
+     * 校验所属机构是否唯一
+     *
+     * @param studentClass 组织机构信息
+     * @return 结果
+     */
+    public String checkSchoolClassNameUnique(StudentClass studentClass);
 }

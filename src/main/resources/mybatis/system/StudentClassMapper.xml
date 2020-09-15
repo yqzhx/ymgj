@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.system.student.mapper.StudentClassMapper">
+	<resultMap type="StudentClass" id="StudentClassResult">
+		<id property="stuDeptId" column="stu_dept_id"/>
+		<result property="stuParentId" column="stu_parent_id"/>
+		<result property="stuAncestors" column="stu_ancestors"/>
+		<result property="stuDeptName" column="stu_dept_name"/>
+		<result property="stuOrderNum" column="stu_order_num"/>
+		<result property="stuLeader" column="stu_leader"/>
+		<result property="stuPhone" column="stu_phone"/>
+		<result property="stuEmail" column="stu_email"/>
+		<result property="stuStatus" column="stu_status"/>
+		<result property="stuDelFlag" column="stu_del_flag"/>
+		<result property="stuCreateBy" column="stu_create_by"/>
+		<result property="stuCreateTime" column="stu_create_time"/>
+		<result property="stuUpdateBy" column="stu_update_by"/>
+		<result property="stuUpdateTime" column="stu_update_time"/>
+	</resultMap>
+
+
+	<sql id="selectDeptVo">
+        select c.stu_dept_id, c.stu_parent_id, c.stu_ancestors, c.stu_dept_name, c.stu_order_num, c.stu_leader, c.stu_phone, c.stu_email, c.stu_status, c.stu_del_flag, c.stu_create_by, c.stu_create_time ,c.stu_update_by,c.stu_update_time
+        from student_class c
+    </sql>
+    
+	<select id="selectRoleStuDeptTree" parameterType="Long" resultType="String">
+		select concat(c.stu_dept_id, c.stu_dept_name) as stu_dept_name
+		from student_class c
+			left join student_personnel p on c.stu_dept_id = p.stu_dept_id
+		where c.stu_del_flag = '0' and p.stu_user_id = #{stuUserId}
+		order by c.stu_parent_id, c.stu_order_num
+	</select>
+	
+	<select id="selectDeptList" parameterType="StudentClass" resultMap="StudentClassResult">
+        <include refid="selectDeptVo"/>
+        where c.stu_del_flag = '0'
+        <if test="stuParentId != null and stuParentId != 0">
+			AND stu_parent_id = #{stuParentId}
+		</if>
+		<if test="stuDeptName != null and stuDeptName != ''">
+			AND stu_dept_name like concat('%', #{stuDeptName}, '%')
+		</if>
+		<if test="stuStatus != null and stuStatus != ''">
+			AND stu_status = #{stuStatus}
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+		order by c.parent_id asc , c.order_num asc ,c.update_time desc
+    </select>
+	
+	<select id="checkStudentClassExistUser" parameterType="Long" resultType="int">
+		select count(1) from student_personnel where stu_dept_id = #{deptId} and stu_del_flag = '0'
+	</select>
+	
+	<select id="selectDeptCount" parameterType="StudentClass" resultType="int">
+		select count(1) from sys_dept
+		where del_flag = '0'
+		<if test="deptId != null and deptId != 0"> and dept_id = #{deptId} </if>
+		<if test="parentId != null and parentId != 0"> and parent_id = #{parentId} </if>
+	</select>
+	
+	<select id="checkDeptNameUnique" resultMap="StudentClassResult">
+	    <include refid="selectDeptVo"/>
+		where dept_name=#{deptName} and parent_id = #{parentId} and del_flag = '0'
+	</select>
+
+	<select id="selectDeptById" parameterType="Long" resultMap="StudentClassResult">
+		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status,
+			(select dept_name from sys_dept where dept_id = d.parent_id ) parent_name
+		from sys_dept d
+		where d.dept_id = #{deptId} and d.del_flag = '0'
+	</select>
+	
+	<insert id="insertDept" parameterType="StudentClass">
+ 		insert into sys_dept(
+ 			<if test="deptId != null and deptId != 0">dept_id,</if>
+ 			<if test="parentId != null and parentId != 0">parent_id,</if>
+ 			<if test="deptName != null and deptName != ''">dept_name,</if>
+ 			<if test="ancestors != null and ancestors != ''">ancestors,</if>
+ 			<if test="orderNum != null and orderNum != ''">order_num,</if>
+ 			<if test="leader != null and leader != ''">leader,</if>
+ 			<if test="phone != null and phone != ''">phone,</if>
+ 			<if test="email != null and email != ''">email,</if>
+ 			<if test="status != null">status,</if>
+			<if test="createBy != null and createBy != ''">create_by,</if>
+			create_time,
+			<if test="createBy != null and createBy != ''">update_by,</if>
+			update_time
+ 		)values(
+ 			<if test="deptId != null and deptId != 0">#{deptId},</if>
+ 			<if test="parentId != null and parentId != 0">#{parentId},</if>
+ 			<if test="deptName != null and deptName != ''">#{deptName},</if>
+ 			<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+ 			<if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+ 			<if test="leader != null and leader != ''">#{leader},</if>
+ 			<if test="phone != null and phone != ''">#{phone},</if>
+ 			<if test="email != null and email != ''">#{email},</if>
+ 			<if test="status != null">#{status},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
+				sysdate(),
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
+			sysdate()
+ 		)
+	</insert>
+	
+	<update id="updateDept" parameterType="StudentClass">
+ 		update sys_dept
+ 		<set>
+ 			<if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+ 			<if test="deptName != null ">dept_name = #{deptName},</if>
+ 			<if test="ancestors != null ">ancestors = #{ancestors},</if>
+ 			<if test="orderNum != null ">order_num = #{orderNum},</if>
+ 			<if test="leader != null ">leader = #{leader},</if>
+ 			<if test="phone != null ">phone = #{phone},</if>
+ 			<if test="email != null ">email = #{email},</if>
+ 			<if test="status != null ">status = #{status},</if>
+ 			<if test="updateBy != null ">update_by = #{updateBy},</if>
+			<if test="delFlag != null">del_flag = #{delFlag},</if>
+ 			update_time = sysdate()
+ 		</set>
+ 		where dept_id = #{deptId}
+	</update>
+	
+	<update id="updateDeptChildren" parameterType="java.util.List">
+	    update sys_dept set ancestors =
+	    <foreach collection="depts" item="item" index="index"
+	        separator=" " open="case dept_id" close="end">
+	        when #{item.deptId} then #{item.ancestors}
+	    </foreach>
+	    where dept_id in
+	    <foreach collection="depts" item="item" index="index"
+	        separator="," open="(" close=")">
+	        #{item.deptId}
+	    </foreach>
+	 </update>
+
+	<delete id="deleteDeptById" parameterType="Long">
+		update sys_dept set del_flag = '1' where dept_id = #{deptId}
+	</delete>
+
+</mapper> 

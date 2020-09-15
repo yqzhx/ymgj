@@ -1,23 +1,26 @@
 package com.uustop.project.system.student.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+
 @Table(name = "student_class")
-public class StudentClass{
+public class StudentClass {
 
     /* 班级id */
     @Id
-    private Integer stuDeptId;
+    private Long stuDeptId;
 
     /* 父部门id */
     @Column(name = "stu_parent_id")
-    private Integer stuParentId;
+    private Long stuParentId;
 
     /* 祖级列表 */
     @Column(name = "stu_ancestors")
@@ -29,7 +32,7 @@ public class StudentClass{
 
     /* 显示顺序 */
     @Column(name = "stu_order_num")
-    private Integer stuOrderNum;
+    private Long stuOrderNum;
 
     /* 负责人 */
     @Column(name = "stu_leader")
@@ -71,19 +74,31 @@ public class StudentClass{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date stuUpdateTime;
 
-    public Integer getStuDeptId() {
+    /* 下级标签 */
+    @Transient
+    private List<StudentClass> studentClasses;
+
+    public List<StudentClass> getStudentClasses() {
+        return studentClasses;
+    }
+
+    public void setStudentClasses(List<StudentClass> studentClasses) {
+        this.studentClasses = studentClasses;
+    }
+
+    public Long getStuDeptId() {
         return stuDeptId;
     }
 
-    public void setStuDeptId(Integer stuDeptId) {
+    public void setStuDeptId(Long stuDeptId) {
         this.stuDeptId = stuDeptId;
     }
 
-    public Integer getStuParentId() {
+    public Long getStuParentId() {
         return stuParentId;
     }
 
-    public void setStuParentId(Integer stuParentId) {
+    public void setStuParentId(Long stuParentId) {
         this.stuParentId = stuParentId;
     }
 
@@ -103,11 +118,11 @@ public class StudentClass{
         this.stuDeptName = stuDeptName;
     }
 
-    public Integer getStuOrderNum() {
+    public Long getStuOrderNum() {
         return stuOrderNum;
     }
 
-    public void setStuOrderNum(Integer stuOrderNum) {
+    public void setStuOrderNum(Long stuOrderNum) {
         this.stuOrderNum = stuOrderNum;
     }
 
@@ -183,7 +198,7 @@ public class StudentClass{
         this.stuUpdateTime = stuUpdateTime;
     }
 
-    public StudentClass(Integer stuDeptId, Integer stuParentId, String stuAncestors, String stuDeptName, Integer stuOrderNum, String stuLeader, String stuPhone, String stuEmail, String stuStatus, String stuDelFlag, String stuCreateBy, Date stuCreateTime, String stuUpdateBy, Date stuUpdateTime) {
+    public StudentClass(Long stuDeptId, Long stuParentId, String stuAncestors, String stuDeptName, Long stuOrderNum, String stuLeader, String stuPhone, String stuEmail, String stuStatus, String stuDelFlag, String stuCreateBy, Date stuCreateTime, String stuUpdateBy, Date stuUpdateTime) {
         this.stuDeptId = stuDeptId;
         this.stuParentId = stuParentId;
         this.stuAncestors = stuAncestors;
@@ -200,12 +215,30 @@ public class StudentClass{
         this.stuUpdateTime = stuUpdateTime;
     }
 
+    public StudentClass(Long stuDeptId, Long stuParentId, String stuAncestors, String stuDeptName, Long stuOrderNum, String stuLeader, String stuPhone, String stuEmail, String stuStatus, String stuDelFlag, String stuCreateBy, Date stuCreateTime, String stuUpdateBy, Date stuUpdateTime, List<StudentClass> studentClasses) {
+        this.stuDeptId = stuDeptId;
+        this.stuParentId = stuParentId;
+        this.stuAncestors = stuAncestors;
+        this.stuDeptName = stuDeptName;
+        this.stuOrderNum = stuOrderNum;
+        this.stuLeader = stuLeader;
+        this.stuPhone = stuPhone;
+        this.stuEmail = stuEmail;
+        this.stuStatus = stuStatus;
+        this.stuDelFlag = stuDelFlag;
+        this.stuCreateBy = stuCreateBy;
+        this.stuCreateTime = stuCreateTime;
+        this.stuUpdateBy = stuUpdateBy;
+        this.stuUpdateTime = stuUpdateTime;
+        this.studentClasses = studentClasses;
+    }
+
     public StudentClass() {
     }
 
     @Override
     public String toString() {
-        return "StudentPersonnel{" +
+        return "StudentClass{" +
                 "stuDeptId=" + stuDeptId +
                 ", stuParentId=" + stuParentId +
                 ", stuAncestors='" + stuAncestors + '\'' +
@@ -220,6 +253,7 @@ public class StudentClass{
                 ", stuCreateTime=" + stuCreateTime +
                 ", stuUpdateBy='" + stuUpdateBy + '\'' +
                 ", stuUpdateTime=" + stuUpdateTime +
+                ", studentClasses=" + studentClasses +
                 '}';
     }
 
@@ -241,11 +275,12 @@ public class StudentClass{
                 Objects.equals(stuCreateBy, that.stuCreateBy) &&
                 Objects.equals(stuCreateTime, that.stuCreateTime) &&
                 Objects.equals(stuUpdateBy, that.stuUpdateBy) &&
-                Objects.equals(stuUpdateTime, that.stuUpdateTime);
+                Objects.equals(stuUpdateTime, that.stuUpdateTime) &&
+                Objects.equals(studentClasses, that.studentClasses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(stuDeptId, stuParentId, stuAncestors, stuDeptName, stuOrderNum, stuLeader, stuPhone, stuEmail, stuStatus, stuDelFlag, stuCreateBy, stuCreateTime, stuUpdateBy, stuUpdateTime);
+        return Objects.hash(stuDeptId, stuParentId, stuAncestors, stuDeptName, stuOrderNum, stuLeader, stuPhone, stuEmail, stuStatus, stuDelFlag, stuCreateBy, stuCreateTime, stuUpdateBy, stuUpdateTime, studentClasses);
     }
 }
