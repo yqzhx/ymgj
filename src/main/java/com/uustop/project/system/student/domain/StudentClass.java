@@ -77,6 +77,17 @@ public class StudentClass {
     /* 下级标签 */
     @Transient
     private List<StudentClass> studentClasses;
+    /* 每个标签中的学生人数 */
+    @Transient
+    private List<StudentPersonnel> studentPersonnels;
+
+    public List<StudentPersonnel> getStudentPersonnels() {
+        return studentPersonnels;
+    }
+
+    public void setStudentPersonnels(List<StudentPersonnel> studentPersonnels) {
+        this.studentPersonnels = studentPersonnels;
+    }
 
     public List<StudentClass> getStudentClasses() {
         return studentClasses;
@@ -233,28 +244,26 @@ public class StudentClass {
         this.studentClasses = studentClasses;
     }
 
-    public StudentClass() {
+    public StudentClass(Long stuDeptId, Long stuParentId, String stuAncestors, String stuDeptName, Long stuOrderNum, String stuLeader, String stuPhone, String stuEmail, String stuStatus, String stuDelFlag, String stuCreateBy, Date stuCreateTime, String stuUpdateBy, Date stuUpdateTime, List<StudentClass> studentClasses, List<StudentPersonnel> studentPersonnels) {
+        this.stuDeptId = stuDeptId;
+        this.stuParentId = stuParentId;
+        this.stuAncestors = stuAncestors;
+        this.stuDeptName = stuDeptName;
+        this.stuOrderNum = stuOrderNum;
+        this.stuLeader = stuLeader;
+        this.stuPhone = stuPhone;
+        this.stuEmail = stuEmail;
+        this.stuStatus = stuStatus;
+        this.stuDelFlag = stuDelFlag;
+        this.stuCreateBy = stuCreateBy;
+        this.stuCreateTime = stuCreateTime;
+        this.stuUpdateBy = stuUpdateBy;
+        this.stuUpdateTime = stuUpdateTime;
+        this.studentClasses = studentClasses;
+        this.studentPersonnels = studentPersonnels;
     }
 
-    @Override
-    public String toString() {
-        return "StudentClass{" +
-                "stuDeptId=" + stuDeptId +
-                ", stuParentId=" + stuParentId +
-                ", stuAncestors='" + stuAncestors + '\'' +
-                ", stuDeptName='" + stuDeptName + '\'' +
-                ", stuOrderNum=" + stuOrderNum +
-                ", stuLeader='" + stuLeader + '\'' +
-                ", stuPhone='" + stuPhone + '\'' +
-                ", stuEmail='" + stuEmail + '\'' +
-                ", stuStatus='" + stuStatus + '\'' +
-                ", stuDelFlag='" + stuDelFlag + '\'' +
-                ", stuCreateBy='" + stuCreateBy + '\'' +
-                ", stuCreateTime=" + stuCreateTime +
-                ", stuUpdateBy='" + stuUpdateBy + '\'' +
-                ", stuUpdateTime=" + stuUpdateTime +
-                ", studentClasses=" + studentClasses +
-                '}';
+    public StudentClass() {
     }
 
     @Override
@@ -276,11 +285,34 @@ public class StudentClass {
                 Objects.equals(stuCreateTime, that.stuCreateTime) &&
                 Objects.equals(stuUpdateBy, that.stuUpdateBy) &&
                 Objects.equals(stuUpdateTime, that.stuUpdateTime) &&
-                Objects.equals(studentClasses, that.studentClasses);
+                Objects.equals(studentClasses, that.studentClasses) &&
+                Objects.equals(studentPersonnels, that.studentPersonnels);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(stuDeptId, stuParentId, stuAncestors, stuDeptName, stuOrderNum, stuLeader, stuPhone, stuEmail, stuStatus, stuDelFlag, stuCreateBy, stuCreateTime, stuUpdateBy, stuUpdateTime, studentClasses);
+        return Objects.hash(stuDeptId, stuParentId, stuAncestors, stuDeptName, stuOrderNum, stuLeader, stuPhone, stuEmail, stuStatus, stuDelFlag, stuCreateBy, stuCreateTime, stuUpdateBy, stuUpdateTime, studentClasses, studentPersonnels);
+    }
+
+    @Override
+    public String toString() {
+        return "StudentClass{" +
+                "stuDeptId=" + stuDeptId +
+                ", stuParentId=" + stuParentId +
+                ", stuAncestors='" + stuAncestors + '\'' +
+                ", stuDeptName='" + stuDeptName + '\'' +
+                ", stuOrderNum=" + stuOrderNum +
+                ", stuLeader='" + stuLeader + '\'' +
+                ", stuPhone='" + stuPhone + '\'' +
+                ", stuEmail='" + stuEmail + '\'' +
+                ", stuStatus='" + stuStatus + '\'' +
+                ", stuDelFlag='" + stuDelFlag + '\'' +
+                ", stuCreateBy='" + stuCreateBy + '\'' +
+                ", stuCreateTime=" + stuCreateTime +
+                ", stuUpdateBy='" + stuUpdateBy + '\'' +
+                ", stuUpdateTime=" + stuUpdateTime +
+                ", studentClasses=" + studentClasses +
+                ", studentPersonnels=" + studentPersonnels +
+                '}';
     }
 }

@@ -4,29 +4,29 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-user-edit" th:object="${user}">
-        <input name="userId" type="hidden" th:field="*{userId}"/>
-        <input name="loginName" type="hidden" th:field="*{loginName}"/>
-        <input name="deptId" type="hidden" th:field="*{deptId}" id="treeId"/>
+    <form class="form-horizontal m" id="form-user-edit" th:object="${student}">
+        <input name="stuUserId" type="hidden" th:field="*{stuUserId}"/>
+        <input name="stuLoginName" type="hidden" th:field="*{stuLoginName}"/>
+        <input name="stuDeptId" type="hidden" th:field="*{stuDeptId}" id="treeId"/>
         <div class="form-group">
             <label class="col-sm-3 control-label">所属机构：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="deptName" onclick="selectDeptTree()" readonly="true"
-                       id="treeName" th:field="*{dept.deptName}">
+                <input class="form-control" type="text" name="stuDeptName" onclick="selectDeptTree()" readonly="true"
+                       id="treeName" th:field="*{school.stuDeptName}">
             </div>
             <label class="col-sm-2 control-label">用户姓名：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="userName" id="userName" th:field="*{userName}">
+                <input class="form-control" type="text" name="stuUserName" id="stuUserName" th:field="*{stuUserName}">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">邮箱：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="email" id="email" th:field="*{email}">
+                <input class="form-control" type="text" name="stuEmail" id="stuEmail" th:field="*{stuEmail}">
             </div>
             <label class="col-sm-2 control-label">绑定手机号：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="phonenumber" id="phonenumber" th:field="*{phonenumber}">
+                <input class="form-control" type="text" name="stuPhonenumber" id="stuPhonenumber" th:field="*{stuPhonenumber}">
             </div>
         </div>
         <div class="form-group">
@@ -52,28 +52,28 @@
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs/select/select2.js}"></script>
 <script>
-    $("#form-user-edit").validate({
+    $("#form-student-edit").validate({
         rules: {
-            userName: {
+            stuUserName: {
                 required: true
             },
-            deptName: {
+            stuDeptName: {
                 required: true
             },
-            email: {
+            stuEmail: {
                 required: true,
                 email: true,
                 isMail:true,
                 remote: {
-                    url: ctx + "system/user/checkEmailUnique",
+                    url: ctx + "system/student/checkEmailUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "userId": function () {
-                            return $("#userId").val();
+                        "stuUserId": function () {
+                            return $("#stuUserId").val();
                         },
-                        "email": function () {
-                            return $.common.trim($("#email").val());
+                        "stuEmail": function () {
+                            return $.common.trim($("#stuEmail").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -81,19 +81,19 @@
                     }
                 }
             },
-            phonenumber: {
+            stuPhonenumber: {
                 required: true,
                 isPhone: true,
                 remote: {
-                    url: ctx + "system/user/checkPhoneUnique",
+                    url: ctx + "system/student/checkPhoneUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "userId": function () {
-                            return $("#userId").val();
+                        "stuUserId": function () {
+                            return $("#stuUserId").val();
                         },
-                        "phonenumber": function () {
-                            return $.common.trim($("#phonenumber").val());
+                        "stuPhonenumber": function () {
+                            return $.common.trim($("#stuPhonenumber").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -101,19 +101,19 @@
                     }
                 }
             },
-            password: {
+            stuPassword: {
                 required: true,
                 isPassword: true
             },
         },
         messages: {
-            "email": {
+            "stuEmail": {
                 remote: "Email已经存在"
             },
-            "phonenumber": {
+            "stuPhonenumber": {
                 remote: "手机号已经存在"
             },
-            "password": {
+            "stuPassword": {
                 isPassword: "请输入至少八个字符，至少一个字母和一个数字"
             }
         },
@@ -129,29 +129,29 @@
     }
 
     function edit() {
-        var userId = $("input[name='userId']").val();
-        var deptId = $("input[name='deptId']").val();
-        var userName = $("input[name='userName']").val();
-        var email = $("input[name='email']").val();
-        var phonenumber = $("input[name='phonenumber']").val();
-        var loginName = $("input[name='loginName']").val();
-        var sex = $("#sex option:selected").val();
-        var status = 0;
+        var stuUserId = $("input[name='stuUserId']").val();
+        var stuDeptId = $("input[name='stuDeptId']").val();
+        var stuUserName = $("input[name='stuUserName']").val();
+        var stuEmail = $("input[name='stuEmail']").val();
+        var stuPhonenumber = $("input[name='stuPhonenumber']").val();
+        var stuLoginName = $("input[name='stuLoginName']").val();
+        var stuSex = $("#stuSex option:selected").val();
+        var stuStatus = 0;
         var roleIds = $.form.selectCheckeds("role");
         var postIds = $.form.selectSelects("post");
         $.ajax({
             cache: true,
             type: "POST",
-            url: ctx + "system/user/edit",
+            url: ctx + "system/student/edit",
             data: {
-                "userId": userId,
-                "deptId": deptId,
-                "userName": userName,
-                "email": email,
-                "phonenumber": phonenumber,
-                "sex": sex,
-                "status": status,
-                "loginName": loginName,
+                "stuUserId": stuUserId,
+                "stuDeptId": stuDeptId,
+                "stuUserName": stuUserName,
+                "stuEmail": stuEmail,
+                "stuPhonenumber": stuPhonenumber,
+                "stuSex": stuSex,
+                "stuStatus": stuStatus,
+                "stuLoginName": stuLoginName,
                 "roleIds": roleIds,
                 "postIds": postIds
             },
@@ -168,7 +168,7 @@
     /*用户管理-修改-选择组织机构树*/
     function selectDeptTree() {
         var deptId = $("#treeId").val();
-        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var url = ctx + "system/school/selectStuDeptTree/" + deptId;
         var options = {
             title: '选择组织机构',
             width: "380",

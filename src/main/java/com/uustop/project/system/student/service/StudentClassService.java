@@ -62,7 +62,7 @@ public interface StudentClassService {
      * @param studentClass 组织机构信息
      * @return 结果
      */
-    public int insertDept(StudentClass studentClass);
+    public int insertStudentClass(StudentClass studentClass);
 
     /**
      * 修改保存组织机构信息

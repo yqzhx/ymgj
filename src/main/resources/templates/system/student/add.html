@@ -4,36 +4,36 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-user-add">
-        <input name="deptId" type="hidden" id="treeId"/>
+    <form class="form-horizontal m" id="form-student-add">
+        <input name="stuDeptId" type="hidden" id="treeId"/>
         <div class="form-group">
             <label class="col-sm-2 control-label ">账号名：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" id="loginName" name="loginName"/>
+                <input class="form-control" type="text" id="stuLoginName" name="stuLoginName"/>
             </div>
             <label class="col-sm-2 control-label">所属机构：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="deptName" onclick="selectDeptTree()" readonly="true" id="treeName">
+                <input class="form-control" type="text" name="stuDeptName" onclick="selectDeptTree()" readonly="true" id="treeName">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">用户姓名：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="userName" id="userName">
+                <input class="form-control" type="text" name="stuUserName" id="stuUserName">
             </div>
             <label class="col-sm-2 control-label">密码：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="password" name="password" id="password">
+                <input class="form-control" type="password" name="stuPassword" id="stuPassword">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">邮箱：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="email" id="email">
+                <input class="form-control" type="text" name="stuEmail" id="stuEmail">
             </div>
             <label class="col-sm-2 control-label">绑定手机号：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="phonenumber" id="phonenumber">
+                <input class="form-control" type="text" name="stuPhonenumber" id="stuPhonenumber">
             </div>
         </div>
         <div class="form-group">
@@ -57,19 +57,19 @@
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs/select/select2.js}"></script>
 <script>
-    $("#form-user-add").validate({
+    $("#form-studet-add").validate({
         rules: {
-            loginName: {
+            stuLoginName: {
                 required: true,
                 minlength: 4,
                 maxlength: 20,
                 remote: {
-                    url: ctx + "system/user/checkLoginNameUnique",
+                    url: ctx + "system/student/checkLoginNameUnique",
                     type: "post",
                     dataType: "json",
                     data: {
                         name: function () {
-                            return $.common.trim($("#loginName").val());
+                            return $.common.trim($("#stuLoginName").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -77,26 +77,26 @@
                     }
                 }
             },
-            userName: {
+            stuUserName: {
                 required: true
             },
-            deptName: {
+            stuDeptName: {
                 required: true
             },
-            password: {
+            stuPassword: {
                 required: true,
                 isPassword: true
             },
-            email: {
+            stuEmail: {
                 required: true,
                 email: true,
                 remote: {
-                    url: ctx + "system/user/checkEmailUnique",
+                    url: ctx + "system/student/checkEmailUnique",
                     type: "post",
                     dataType: "json",
                     data: {
                         name: function () {
-                            return $.common.trim($("#email").val());
+                            return $.common.trim($("#stuEmail").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -104,16 +104,16 @@
                     }
                 }
             },
-            phonenumber: {
+            stuPhonenumber: {
                 required: true,
                 isPhone: true,
                 remote: {
-                    url: ctx + "system/user/checkPhoneUnique",
+                    url: ctx + "system/student/checkPhoneUnique",
                     type: "post",
                     dataType: "json",
                     data: {
                         name: function () {
-                            return $.common.trim($("#phonenumber").val());
+                            return $.common.trim($("#stuPhonenumber").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -123,16 +123,16 @@
             }
         },
         messages: {
-            "loginName": {
+            "stuLoginName": {
                 remote: "用户已经存在"
             },
-            "email": {
+            "stuEmail": {
                 remote: "Email已经存在"
             },
-            "phonenumber": {
+            "stuPhonenumber": {
                 remote: "手机号已经存在"
             },
-            "password": {
+            "stuPassword": {
                 isPassword: "请输入至少八个字符，至少一个字母和一个数字"
             }
         }
@@ -145,31 +145,31 @@
     }
 
     function add() {
-        var userId = $("input[name='userId']").val();
-        var deptId = $("input[name='deptId']").val();
-        var loginName = $("input[name='loginName']").val();
-        var userName = $("input[name='userName']").val();
-        var password = $("input[name='password']").val();
-        var email = $("input[name='email']").val();
-        var phonenumber = $("input[name='phonenumber']").val();
-        var sex = $("#sex option:selected").val();
-        var status = 0;
+        var stuUserId = $("input[name='stuUserId']").val();
+        var stuDeptId = $("input[name='stuDeptId']").val();
+        var stuLoginName = $("input[name='stuLoginName']").val();
+        var stuUserName = $("input[name='stuUserName']").val();
+        var stuPassword = $("input[name='stuPassword']").val();
+        var stuEmail = $("input[name='stuEmail']").val();
+        var stuPhonenumber = $("input[name='stuPhonenumber']").val();
+        var stuSex = $("#sex option:selected").val();
+        var stuStatus = 0;
         var roleIds = $.form.selectCheckeds("role");
         var postIds = $.form.selectSelects("post");
         $.ajax({
             cache: true,
             type: "POST",
-            url: ctx + "system/user/add",
+            url: ctx + "system/student/add",
             data: {
-                "userId": userId,
-                "deptId": deptId,
-                "loginName": loginName,
-                "userName": userName,
-                "password": password,
-                "email": email,
-                "phonenumber": phonenumber,
-                "sex": sex,
-                "status": status,
+                "stuUserId": stuUserId,
+                "stuDeptId": stuDeptId,
+                "stuLoginName": stuLoginName,
+                "stuUserName": stuUserName,
+                "stuPassword": stuPassword,
+                "stuEmail": stuEmail,
+                "stuPhonenumber": stuPhonenumber,
+                "stuSex": sex,
+                "stuStatus": status,
                 "roleIds": roleIds,
                 "postIds": postIds
             },
@@ -186,11 +186,11 @@
     /*用户管理-新增-选择组织机构树*/
     function selectDeptTree() {
         var treeId = $("#treeId").val();
-        var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
+        var stuDeptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
         var options = {
             title: '选择组织机构',
             width: "380",
-            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            url: ctx + "system/school/selectDeptTree/" + stuDeptId,
             callBack: doSubmit
         };
         $.modal.openOptions(options);

@@ -24,7 +24,7 @@ public class StudentMapperTest {
     public void mapper(){
         /*StudentPersonnel student = new StudentPersonnel();
         student.setStuUserId(1);
-        student.setStuUserName("zhx");*/
+        student.setStuUserName("zhx");*//*
         String column = "stuUserName";
         String condition = "%小%";
         Example example = new Example(StudentPersonnel.class);
@@ -33,10 +33,15 @@ public class StudentMapperTest {
         for (StudentPersonnel studentPersonnel : studentPersonnels1) {
             System.out.println("studentPersonnel = " + studentPersonnel);
         }
-        /*List<StudentClass> studentClasses = studentClassMapper.selectAll();
-        studentClasses.forEach((studentClass -> System.out.println("studentClass = " + studentClass)));*/
+        *//*List<StudentClass> studentClasses = studentClassMapper.selectAll();
+        studentClasses.forEach((studentClass -> System.out.println("studentClass = " + studentClass)));*//*
 //        studentPersonnelMapper.insertSelective(student);
         List<StudentPersonnel> studentPersonnels = studentPersonnelMapper.selectAll();
-        studentPersonnels.forEach(studentPersonnel -> System.out.println("studentPersonnel = " + studentPersonnel));
+        studentPersonnels.forEach(studentPersonnel -> System.out.println("studentPersonnel = " + studentPersonnel));*/
+        StudentPersonnel s = new StudentPersonnel();
+        List<StudentPersonnel> studentPersonnels = studentPersonnelMapper.selectStudentPersonnelList(s);
+        for (StudentPersonnel studentPersonnel : studentPersonnels) {
+            System.out.println("studentPersonnel = " + studentPersonnel);
+        }
     }
 }

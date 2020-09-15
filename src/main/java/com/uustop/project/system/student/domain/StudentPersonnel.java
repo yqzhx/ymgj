@@ -1,13 +1,16 @@
 package com.uustop.project.system.student.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.uustop.project.system.role.domain.Role;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Table(name = "student_personnel")
@@ -90,6 +93,8 @@ public class StudentPersonnel {
 
     /* 更行时间 */
     @Column(name = "stu_update_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date stuUpdateTime;
 
     /* 备注 */
@@ -105,6 +110,30 @@ public class StudentPersonnel {
     /* qq */
     @Column(name = "stu_QQ")
     private String stuQQ;
+
+    /* 在那个标签下 */
+    @Transient
+    private StudentClass studentClass;
+
+    /*   */
+    @Transient
+    private List<Role> roles;
+
+    public StudentClass getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(StudentClass studentClass) {
+        this.studentClass = studentClass;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public Long getStuUserId() {
         return stuUserId;
@@ -193,16 +222,17 @@ public class StudentPersonnel {
     public void setStuSalt(String stuSalt) {
         this.stuSalt = stuSalt;
     }
+
     /**
      * 生成随机盐
      */
-    public void randomSalt()
-    {
+    public void randomSalt() {
         // 一个Byte占两个字节，此处生成的3字节，字符串长度为6
         SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
         String hex = secureRandom.nextBytes(3).toHex();
         setStuSalt(hex);
     }
+
     public String getStuStatus() {
         return stuStatus;
     }
@@ -319,32 +349,31 @@ public class StudentPersonnel {
         this.stuQQ = stuQQ;
     }
 
-    @Override
-    public String toString() {
-        return "StudentPersonnel{" +
-                "stuUserId=" + stuUserId +
-                ", stuDeptId=" + stuDeptId +
-                ", stuLoginName='" + stuLoginName + '\'' +
-                ", stuUserName='" + stuUserName + '\'' +
-                ", stuUserType='" + stuUserType + '\'' +
-                ", stuEmail='" + stuEmail + '\'' +
-                ", stuPhonenumber='" + stuPhonenumber + '\'' +
-                ", stuSex='" + stuSex + '\'' +
-                ", stuAvatar='" + stuAvatar + '\'' +
-                ", stuPassword='" + stuPassword + '\'' +
-                ", stuSalt='" + stuSalt + '\'' +
-                ", stuStatus='" + stuStatus + '\'' +
-                ", stuDelFlag='" + stuDelFlag + '\'' +
-                ", stuLoginIp='" + stuLoginIp + '\'' +
-                ", stuLoginDate=" + stuLoginDate +
-                ", stuCreateBy='" + stuCreateBy + '\'' +
-                ", stuCreateTime=" + stuCreateTime +
-                ", stuUpdateBy='" + stuUpdateBy + '\'' +
-                ", stuUpdateTime=" + stuUpdateTime +
-                ", stuRemark='" + stuRemark + '\'' +
-                ", stuBirthday=" + stuBirthday +
-                ", stuQQ='" + stuQQ + '\'' +
-                '}';
+    public StudentPersonnel(Long stuUserId, Long stuDeptId, String stuLoginName, String stuUserName, String stuUserType, String stuEmail, String stuPhonenumber, String stuSex, String stuAvatar, String stuPassword, String stuSalt, String stuStatus, String stuDelFlag, String stuLoginIp, Date stuLoginDate, String stuCreateBy, Date stuCreateTime, String stuUpdateBy, Date stuUpdateTime, String stuRemark, Date stuBirthday, String stuQQ, StudentClass studentClass, List<Role> roles) {
+        this.stuUserId = stuUserId;
+        this.stuDeptId = stuDeptId;
+        this.stuLoginName = stuLoginName;
+        this.stuUserName = stuUserName;
+        this.stuUserType = stuUserType;
+        this.stuEmail = stuEmail;
+        this.stuPhonenumber = stuPhonenumber;
+        this.stuSex = stuSex;
+        this.stuAvatar = stuAvatar;
+        this.stuPassword = stuPassword;
+        this.stuSalt = stuSalt;
+        this.stuStatus = stuStatus;
+        this.stuDelFlag = stuDelFlag;
+        this.stuLoginIp = stuLoginIp;
+        this.stuLoginDate = stuLoginDate;
+        this.stuCreateBy = stuCreateBy;
+        this.stuCreateTime = stuCreateTime;
+        this.stuUpdateBy = stuUpdateBy;
+        this.stuUpdateTime = stuUpdateTime;
+        this.stuRemark = stuRemark;
+        this.stuBirthday = stuBirthday;
+        this.stuQQ = stuQQ;
+        this.studentClass = studentClass;
+        this.roles = roles;
     }
 
     @Override
@@ -373,11 +402,43 @@ public class StudentPersonnel {
                 Objects.equals(stuUpdateTime, that.stuUpdateTime) &&
                 Objects.equals(stuRemark, that.stuRemark) &&
                 Objects.equals(stuBirthday, that.stuBirthday) &&
-                Objects.equals(stuQQ, that.stuQQ);
+                Objects.equals(stuQQ, that.stuQQ) &&
+                Objects.equals(studentClass, that.studentClass) &&
+                Objects.equals(roles, that.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(stuUserId, stuDeptId, stuLoginName, stuUserName, stuUserType, stuEmail, stuPhonenumber, stuSex, stuAvatar, stuPassword, stuSalt, stuStatus, stuDelFlag, stuLoginIp, stuLoginDate, stuCreateBy, stuCreateTime, stuUpdateBy, stuUpdateTime, stuRemark, stuBirthday, stuQQ);
+        return Objects.hash(stuUserId, stuDeptId, stuLoginName, stuUserName, stuUserType, stuEmail, stuPhonenumber, stuSex, stuAvatar, stuPassword, stuSalt, stuStatus, stuDelFlag, stuLoginIp, stuLoginDate, stuCreateBy, stuCreateTime, stuUpdateBy, stuUpdateTime, stuRemark, stuBirthday, stuQQ, studentClass, roles);
+    }
+
+    @Override
+    public String toString() {
+        return "StudentPersonnel{" +
+                "stuUserId=" + stuUserId +
+                ", stuDeptId=" + stuDeptId +
+                ", stuLoginName='" + stuLoginName + '\'' +
+                ", stuUserName='" + stuUserName + '\'' +
+                ", stuUserType='" + stuUserType + '\'' +
+                ", stuEmail='" + stuEmail + '\'' +
+                ", stuPhonenumber='" + stuPhonenumber + '\'' +
+                ", stuSex='" + stuSex + '\'' +
+                ", stuAvatar='" + stuAvatar + '\'' +
+                ", stuPassword='" + stuPassword + '\'' +
+                ", stuSalt='" + stuSalt + '\'' +
+                ", stuStatus='" + stuStatus + '\'' +
+                ", stuDelFlag='" + stuDelFlag + '\'' +
+                ", stuLoginIp='" + stuLoginIp + '\'' +
+                ", stuLoginDate=" + stuLoginDate +
+                ", stuCreateBy='" + stuCreateBy + '\'' +
+                ", stuCreateTime=" + stuCreateTime +
+                ", stuUpdateBy='" + stuUpdateBy + '\'' +
+                ", stuUpdateTime=" + stuUpdateTime +
+                ", stuRemark='" + stuRemark + '\'' +
+                ", stuBirthday=" + stuBirthday +
+                ", stuQQ='" + stuQQ + '\'' +
+                ", studentClass=" + studentClass +
+                ", roles=" + roles +
+                '}';
     }
 }

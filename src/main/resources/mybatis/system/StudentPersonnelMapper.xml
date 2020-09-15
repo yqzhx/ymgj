@@ -80,6 +80,8 @@
                u.stu_QQ
         from student_personnel u
                  left join student_class d on u.stu_dept_id = d.stu_dept_id
+                 left join sys_user_role ur on u.stu_user_id = ur.user_id
+                 left join sys_role r on r.role_id = ur.role_id
     </sql>
 
     <select id="selectStudentPersonnelList" parameterType="StudentPersonnel" resultMap="StudentPersonnelResult">
@@ -104,81 +106,18 @@
                 '%'
                 )
             </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                AND date_format(u.stu_create_time,'%y%m%d') &gt;= date_format(
-                #{params.beginTime},
-                '%y%m%d'
-                )
-            </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                AND date_format(u.stu_create_time,'%y%m%d') &lt;= date_format(
-                #{params.endTime},
-                '%y%m%d'
-                )
-            </if>
             <if test="stuDeptId != null and stuDeptId != 0">
                 AND
                 (u.stu_dept_id = #{stuDeptId} OR u.stu_dept_id IN (SELECT t.stu_dept_id FROM student_class t WHERE FIND_IN_SET (#{stuDeptId},ancestors)))
             </if>
         </where>
-        order by u.stu_update_time desc
-        <!-- 数据范围过滤 -->
-        ${params.dataScope}
-    </select>
 
-    <select id="selectUserByLoginName" parameterType="String" resultMap="StudentPersonnelResult">
-        <include refid="selectUserVo"/>
-        where u.stu_login_name = #{stuUserName} and u.stu_del_flag = '0'
     </select>
 
     <select id="selectUserNameByLoginName" resultMap="StudentPersonnelResult">
         select stu_user_name, stu_login_name from student_personnel
     </select>
 
-    <select id="selectUserNameByLoginNameByType" resultMap="StudentPersonnelResult" parameterType="Integer">
-        select user_name, login_name from enterprises
-        <where>
-            <if test="type != null ">
-                and type = #{type}
-            </if>
-        </where>
-    </select>
-
-    <select id="selectUserByPhoneNumber" parameterType="String" resultMap="StudentPersonnelResult">
-        <include refid="selectUserVo"/>
-        where u.phonenumber = #{phonenumber} and u.del_flag = '0'
-    </select>
-
-    <select id="selectUserByEmail" parameterType="String" resultMap="StudentPersonnelResult">
-        <include refid="selectUserVo"/>
-        where u.email = #{email} and u.del_flag = '0'
-    </select>
-
-    <select id="checkLoginNameUnique" parameterType="String" resultType="int">
-        select count(1)
-        from sys_user
-        where login_name = #{loginName}
-          and del_flag = '0'
-    </select>
-
-    <select id="checkPhoneUnique" parameterType="String" resultMap="StudentPersonnelResult">
-        select user_id, phonenumber
-        from sys_user
-        where phonenumber = #{phonenumber}
-          and del_flag = '0'
-    </select>
-
-    <select id="checkEmailUnique" parameterType="String" resultMap="StudentPersonnelResult">
-        select user_id, email
-        from sys_user
-        where email = #{email}
-          and del_flag = '0'
-    </select>
-
-    <select id="selectUserById" parameterType="Long" resultMap="StudentPersonnelResult">
-        <include refid="selectUserVo"/>
-        where u.user_id = #{userId}
-    </select>
 
     <select id="selectMfrsAccountByLoginName" parameterType="StudentPersonnel" resultMap="StudentPersonnelResult">
         select phonenumber, user_name
@@ -186,87 +125,6 @@
         where login_name = #{stuUserName}
     </select>
 
-    <update id="updateUser" parameterType="StudentPersonnel">
-        update sys_user
-        <set>
-            <if test="deptId != null and deptId != 0">dept_id =
-            #{deptId},</if>
-            <if test="loginName != null ">login_name =
-            #{loginName},</if>
-            <if test="userName != null ">user_name =
-            #{userName},</if>
-            <if test="email != null ">email =
-            #{email},</if>
-            <if test="phonenumber != null ">phonenumber =
-            #{phonenumber},</if>
-            <if test="sex != null ">sex =
-            #{sex},</if>
-            <if test="avatar != null ">avatar =
-            #{avatar},</if>
-            <if test="password != null">password =
-            #{password},</if>
-            <if test="salt != null ">salt =
-            #{salt},</if>
-            <if test="status != null ">status =
-            #{status},</if>
-            <if test="loginIp != null">login_ip =
-            #{loginIp},</if>
-            <if test="loginDate != null">login_date =
-            #{loginDate},</if>
-            <if test="updateBy != null ">update_by =
-            #{updateBy},</if>
-            <if test="remark != null ">remark =
-            #{remark},</if>
-            <if test="delFlag != null ">del_flag =
-            #{delFlag},</if>
-            <if test="birthday != null ">birthday =
-            #{birthday},</if>
-            <if test="QQ != null ">QQ =
-            #{QQ},</if>
-            update_time = sysdate()
-        </set>
-        where user_id = #{userId}
-    </update>
-
-    <insert id="insertUser" parameterType="StudentPersonnel" useGeneratedKeys="true" keyProperty="userId">
-        insert into sys_user(
-        <if test="userId != null and userId != 0">user_id,</if>
-        <if test="deptId != null and deptId != 0">dept_id,</if>
-        <if test="loginName != null and loginName != ''">login_name,</if>
-        <if test="userName != null and userName != ''">user_name,</if>
-        <if test="email != null and email != ''">email,</if>
-        <if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
-        <if test="sex != null and sex != ''">sex,</if>
-        <if test="password != null and password != ''">password,</if>
-        <if test="salt != null and salt != ''">salt,</if>
-        <if test="status != null and status != ''">status,</if>
-        <if test="remark != null and remark != ''">remark,</if>
-        <if test="createBy != null and createBy != ''">create_by,</if>
-        <if test="birthday != null and birthday != ''">birthday,</if>
-        <if test="QQ != null and QQ != ''">QQ,</if>
-        create_time,
-        <if test="createBy != null and createBy != ''">update_by,</if>
-        update_time
-        )values(
-        <if test="userId != null and userId != ''">#{userId},</if>
-        <if test="deptId != null and deptId != ''">#{deptId},</if>
-        <if test="loginName != null and loginName != ''">#{loginName},</if>
-        <if test="userName != null and userName != ''">#{userName},</if>
-        <if test="email != null and email != ''">#{email},</if>
-        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
-        <if test="sex != null and sex != ''">#{sex},</if>
-        <if test="password != null and password != ''">#{password},</if>
-        <if test="salt != null and salt != ''">#{salt},</if>
-        <if test="status != null and status != ''">#{status},</if>
-        <if test="remark != null and remark != ''">#{remark},</if>
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
-        <if test="birthday != null and birthday != ''">#{birthday},</if>
-        <if test="QQ != null and QQ != ''">#{QQ},</if>
-        sysdate(),
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
-        sysdate()
-        )
-    </insert>
 
     <select id="selectCountByClinicId" resultType="int">
         select count(*)

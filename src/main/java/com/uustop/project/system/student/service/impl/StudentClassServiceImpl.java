@@ -135,7 +135,7 @@ public class StudentClassServiceImpl implements StudentClassService {
      * @return 结果
      */
     @Override
-    public int insertDept(StudentClass studentClass) {
+    public int insertStudentClass(StudentClass studentClass) {
         Example example = new Example(StudentClass.class);
         example.createCriteria().andEqualTo("stuParentId", studentClass.getStuParentId());
         StudentClass info = (StudentClass) studentClassMapper.selectByExample(example);

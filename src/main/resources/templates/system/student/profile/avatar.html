@@ -4,7 +4,7 @@
 <title>用户头像修改</title>
 <link th:href="@{/ajax/libs/cropbox/cropbox.css}" rel="stylesheet"/>
 <body class="white-bg">
-    <input name="userId" id="userId" type="hidden"  th:value="${user.userId}" />
+    <input name="userId" id="userId" type="hidden"  th:value="${student.stuUserId}" />
     <div class="container"> 
         <div class="imageBox"> 
 	        <div class="thumbBox"></div> 
@@ -26,7 +26,7 @@
 <script type="text/javascript">
 var cropper;
 $(window).load(function() {
-	var avatar = '[[${user.avatar}]]';
+	var avatar = '[[${student.stuAvatar}]]';
     var options = {
         thumbBox: '.thumbBox',
         spinner: '.spinner',
@@ -70,7 +70,7 @@ function submitHandler() {
     formdata.append("avatarfile", img);
     formdata.append("userId", $("#userId").val());
     $.ajax({
-        url: ctx + "system/user/profile/updateAvatar",
+        url: ctx + "system/student/profile/updateAvatar",
         data: formdata,
         type: "post",
         processData: false,

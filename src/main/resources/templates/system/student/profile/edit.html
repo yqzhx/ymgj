@@ -4,41 +4,41 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-user-edit" th:object="${user}">
-        <input name="userId" type="hidden" th:field="*{userId}"/>
+    <form class="form-horizontal m" id="form-user-edit" th:object="${student}">
+        <input name="userId" type="hidden" th:field="*{stuUserId}"/>
         <div class="form-group">
             <label class="col-sm-3 control-label ">账号名：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" readonly="true" th:field="*{loginName}"/>
+                <input class="form-control" type="text" readonly="true" th:field="*{stuLoginName}"/>
             </div>
             <label class="col-sm-2 control-label">所属机构：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" readonly="true" th:field="*{dept.deptName}">
+                <input class="form-control" type="text" readonly="true" th:field="*{student.stuDeptName}">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">用户姓名：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="userName" id="userName" th:field="*{userName}">
+                <input class="form-control" type="text" name="stuUserName" id="stuUserName" th:field="*{stuUserName}">
             </div>
             <label class="col-sm-2 control-label">邮箱：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="email" th:field="*{email}">
+                <input class="form-control" type="text" name="stuEmail" th:field="*{stuEmail}">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">绑定手机号：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="phonenumber" id="phonenumber" th:field="*{phonenumber}">
+                <input class="form-control" type="text" name="stuPhonenumber" id="stuPhonenumber" th:field="*{stuPhonenumber}">
             </div>
             <label class="col-sm-2 control-label">性别：</label>
             <div class="col-sm-3">
                 <div class="radio-box">
-                    <input type="radio" id="radio1" th:field="*{sex}" name="sex" value="0">
+                    <input type="radio" id="radio1" th:field="*{stuSex}" name="sex" value="0">
                     <label for="radio1">男</label>
                 </div>
                 <div class="radio-box">
-                    <input type="radio" id="radio2" th:field="*{sex}" name="sex" value="1">
+                    <input type="radio" id="radio2" th:field="*{stuSex}" name="sex" value="1">
                     <label for="radio2">女</label>
                 </div>
             </div>
@@ -50,22 +50,22 @@
 <script>
     $("#form-user-edit").validate({
         rules: {
-            userName: {
+            stuUserName: {
                 required: true,
             },
-            email: {
+            stuEmail: {
                 required: true,
                 email: true,
                 remote: {
-                    url: ctx + "system/user/checkEmailUnique",
+                    url: ctx + "system/student/checkEmailUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "userId": function () {
-                            return $("#userId").val();
+                        "stuUserId": function () {
+                            return $("#stuUserId").val();
                         },
-                        "email": function () {
-                            return $.common.trim($("#email").val());
+                        "stuEmail": function () {
+                            return $.common.trim($("#stuEmail").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -73,19 +73,19 @@
                     }
                 }
             },
-            phonenumber: {
+            stuPhonenumber: {
                 required: true,
                 isPhone: true,
                 remote: {
-                    url: ctx + "system/user/checkPhoneUnique",
+                    url: ctx + "system/student/checkPhoneUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "userId": function () {
+                        "stuUserId": function () {
                             return $("#userId").val();
                         },
-                        "phonenumber": function () {
-                            return $.common.trim($("#phonenumber").val());
+                        "stuPhonenumber": function () {
+                            return $.common.trim($("#stuPhonenumber").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -93,19 +93,19 @@
                     }
                 }
             },
-            password: {
+            stuPassword: {
                 required: true,
                 isPassword: true
             }
         },
         messages: {
-            "email": {
+            "stuEmail": {
                 remote: "Email已经存在"
             },
-            "phonenumber": {
+            "stuPhonenumber": {
                 remote: "手机号已经存在"
             },
-            "password": {
+            "stuPassword": {
                 isPassword: "请输入至少八个字符，至少一个字母和一个数字"
             }
         }
@@ -113,7 +113,7 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(ctx + "system/user/profile/update", $('#form-user-edit').serialize());
+            $.operate.save(ctx + "system/student/profile/update", $('#form-student-edit').serialize());
         }
     }
 </script>

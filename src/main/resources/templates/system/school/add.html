@@ -4,39 +4,39 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-dept-add">
-        <input id="treeId" name="parentId" type="hidden" th:value="${dept.deptId}"/>
+    <form class="form-horizontal m" id="form-school-add">
+        <input id="treeId" name="stuParentId" type="hidden" th:value="${school.stuDeptId}"/>
         <div class="form-group">
             <label class="col-sm-2 control-label ">上级机构：</label>
             <div class="col-sm-8">
                 <input class="form-control" type="text" onclick="selectDeptTree()" id="treeName" readonly="true"
-                       th:value="${dept.deptName}"/>
+                       th:value="${school.stuDeptName}"/>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">所属机构：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="deptName" id="deptName">
+                <input class="form-control" type="text" name="stuDeptName" id="stuDeptName">
             </div>
             <label class="col-sm-2 control-label">显示排序：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="orderNum">
+                <input class="form-control" type="text" name="stuOrderNum">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">联系人：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="leader">
+                <input class="form-control" type="text" name="stuLeader">
             </div>
             <label class="col-sm-2 control-label">联系电话：</label>
             <div class="col-sm-3">
-                <input class="form-control" type="text" name="phone">
+                <input class="form-control" type="text" name="stuPhone">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">邮箱：</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" name="email">
+                <input class="form-control" type="text" name="stuEmail">
             </div>
         </div>
         <!--<div class="form-group">-->
@@ -52,22 +52,22 @@
 </div>
 <div th:include="include::footer"></div>
 <script type="text/javascript">
-    var prefix = ctx + "system/dept";
+    var prefix = ctx + "system/school";
 
-    $("#form-dept-add").validate({
+    $("#form-school-add").validate({
         rules: {
-            deptName: {
+            stuDeptName: {
                 required: true,
                 remote: {
                     url: prefix + "/checkDeptNameUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "parentId": function () {
-                            return $("input[name='parentId']").val();
+                        "stuParentId": function () {
+                            return $("input[name='stuParentId']").val();
                         },
-                        "deptName": function () {
-                            return $.common.trim($("#deptName").val());
+                        "stuDeptName": function () {
+                            return $.common.trim($("#stuDeptName").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -75,14 +75,14 @@
                     }
                 }
             },
-            orderNum: {
+            stuOrderNum: {
                 required: true,
                 digits: true
             },
-            email: {
+            stuEmail: {
                 email: true,
             },
-            phone: {
+            stuPhone: {
                 isPhone: true,
             },
         },
@@ -95,7 +95,7 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/add", $('#form-dept-add').serialize());
+            $.operate.save(prefix + "/add", $('#form-school-add').serialize());
         }
     }
 
@@ -104,7 +104,7 @@
         var options = {
             title: '组织机构选择',
             width: "380",
-            url: prefix + "/selectDeptTree/" + $("#treeId").val(),
+            url: prefix + "/selectStuDeptTree/" + $("#treeId").val(),
             callBack: doSubmit
         };
         $.modal.openOptions(options);

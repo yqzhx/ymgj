@@ -74,7 +74,7 @@ public class DeptController extends BaseController {
     public String edit(@PathVariable("deptId") Long deptId, ModelMap mmap) {
         Dept dept = deptService.selectDeptById(deptId);
         if (StringUtils.isNotNull(dept) && 100L == deptId) {
-            dept.setParentName("无");
+            dept.setDeptName("无");
         }
         mmap.put("dept", dept);
         return prefix + "/edit";

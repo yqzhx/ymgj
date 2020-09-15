@@ -47,98 +47,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND stu_status = #{stuStatus}
 		</if>
 		<!-- 数据范围过滤 -->
-		${params.dataScope}
 		order by c.parent_id asc , c.order_num asc ,c.update_time desc
     </select>
 	
 	<select id="checkStudentClassExistUser" parameterType="Long" resultType="int">
 		select count(1) from student_personnel where stu_dept_id = #{deptId} and stu_del_flag = '0'
 	</select>
-	
-	<select id="selectDeptCount" parameterType="StudentClass" resultType="int">
-		select count(1) from sys_dept
-		where del_flag = '0'
-		<if test="deptId != null and deptId != 0"> and dept_id = #{deptId} </if>
-		<if test="parentId != null and parentId != 0"> and parent_id = #{parentId} </if>
-	</select>
-	
-	<select id="checkDeptNameUnique" resultMap="StudentClassResult">
-	    <include refid="selectDeptVo"/>
-		where dept_name=#{deptName} and parent_id = #{parentId} and del_flag = '0'
-	</select>
 
-	<select id="selectDeptById" parameterType="Long" resultMap="StudentClassResult">
-		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status,
-			(select dept_name from sys_dept where dept_id = d.parent_id ) parent_name
-		from sys_dept d
-		where d.dept_id = #{deptId} and d.del_flag = '0'
-	</select>
-	
-	<insert id="insertDept" parameterType="StudentClass">
- 		insert into sys_dept(
- 			<if test="deptId != null and deptId != 0">dept_id,</if>
- 			<if test="parentId != null and parentId != 0">parent_id,</if>
- 			<if test="deptName != null and deptName != ''">dept_name,</if>
- 			<if test="ancestors != null and ancestors != ''">ancestors,</if>
- 			<if test="orderNum != null and orderNum != ''">order_num,</if>
- 			<if test="leader != null and leader != ''">leader,</if>
- 			<if test="phone != null and phone != ''">phone,</if>
- 			<if test="email != null and email != ''">email,</if>
- 			<if test="status != null">status,</if>
-			<if test="createBy != null and createBy != ''">create_by,</if>
-			create_time,
-			<if test="createBy != null and createBy != ''">update_by,</if>
-			update_time
- 		)values(
- 			<if test="deptId != null and deptId != 0">#{deptId},</if>
- 			<if test="parentId != null and parentId != 0">#{parentId},</if>
- 			<if test="deptName != null and deptName != ''">#{deptName},</if>
- 			<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
- 			<if test="orderNum != null and orderNum != ''">#{orderNum},</if>
- 			<if test="leader != null and leader != ''">#{leader},</if>
- 			<if test="phone != null and phone != ''">#{phone},</if>
- 			<if test="email != null and email != ''">#{email},</if>
- 			<if test="status != null">#{status},</if>
-			<if test="createBy != null and createBy != ''">#{createBy},</if>
-				sysdate(),
-			<if test="createBy != null and createBy != ''">#{createBy},</if>
-			sysdate()
- 		)
-	</insert>
-	
-	<update id="updateDept" parameterType="StudentClass">
- 		update sys_dept
- 		<set>
- 			<if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
- 			<if test="deptName != null ">dept_name = #{deptName},</if>
- 			<if test="ancestors != null ">ancestors = #{ancestors},</if>
- 			<if test="orderNum != null ">order_num = #{orderNum},</if>
- 			<if test="leader != null ">leader = #{leader},</if>
- 			<if test="phone != null ">phone = #{phone},</if>
- 			<if test="email != null ">email = #{email},</if>
- 			<if test="status != null ">status = #{status},</if>
- 			<if test="updateBy != null ">update_by = #{updateBy},</if>
-			<if test="delFlag != null">del_flag = #{delFlag},</if>
- 			update_time = sysdate()
- 		</set>
- 		where dept_id = #{deptId}
-	</update>
-	
-	<update id="updateDeptChildren" parameterType="java.util.List">
-	    update sys_dept set ancestors =
-	    <foreach collection="depts" item="item" index="index"
-	        separator=" " open="case dept_id" close="end">
-	        when #{item.deptId} then #{item.ancestors}
-	    </foreach>
-	    where dept_id in
-	    <foreach collection="depts" item="item" index="index"
-	        separator="," open="(" close=")">
-	        #{item.deptId}
-	    </foreach>
-	 </update>
-
-	<delete id="deleteDeptById" parameterType="Long">
-		update sys_dept set del_flag = '1' where dept_id = #{deptId}
-	</delete>
 
 </mapper> 

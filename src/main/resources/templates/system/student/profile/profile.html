@@ -94,28 +94,28 @@
                     <form class="form-horizontal" style="margin-left:80px;margin-top:15px;" >
                         <div class="col-lg-6">
                             <img src="/img/basePerson.png" style="display:inline-block;vertical-align: sub;margin-right: 15px;" alt=""><h5 style="display:inline-block;margin-bottom: 30px;font-size: 16px;color:#447CD6;font-weight: normal;">个人信息</h5>
-                            <input name="userId"  type="hidden"  th:field="*{user.userId}" />
+                            <input name="userId"  type="hidden"  th:field="*{student.stuUserId}" />
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label ">账号名：</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control borderNone" type="text" readonly="true" th:field="*{user.loginName}"/>
+                                    <input class="form-control borderNone" type="text" readonly="true" th:field="*{student.stuLoginName}"/>
                                 </div>
                             </div>
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label ">用户姓名：</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control " name="userName" type="text"  th:field="*{user.userName}"/>
+                                    <input class="form-control " name="stuUserName" type="text"  th:field="*{student.stuUserName}"/>
                                 </div>
                             </div>
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label">性别：</label>
                                 <div class="col-sm-8" style="line-height: 35px;">
                                     <div style="display: inline-block">
-                                        <input type="radio" id="radio1" th:field="*{user.sex}" name="sex" value="0">
+                                        <input type="radio" id="radio1" th:field="*{student.stuSex}" name="stuSex" value="0">
                                         <label for="radio1" style="margin-right:15px;">男</label>
                                     </div>
                                     <div style="display: inline-block">
-                                        <input type="radio" id="radio2" th:field="*{user.sex}" name="sex" value="1">
+                                        <input type="radio" id="radio2" th:field="*{student.stuSex}" name="stuSex" value="1">
                                         <label for="radio2">女</label>
                                     </div>
                                 </div>
@@ -124,31 +124,31 @@
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label ">手机：</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control borderNone" type="text" readonly="true" th:field="*{user.phonenumber}"/>
+                                    <input class="form-control borderNone" type="text" readonly="true" th:field="*{student.stuPhonenumber}"/>
                                 </div>
                             </div>
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label">QQ：</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="QQ" th:field="*{user.QQ}">
+                                    <input class="form-control" type="text" name="stuQQ" th:field="*{student.stuQQ}">
                                 </div>
                             </div>
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label">生日：</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control time-inputimg" autocomplete="off" type="text"  name="birthday" th:value="*{#dates.format(user.birthday,'yyyy年MM月dd日')}">
+                                    <input class="form-control time-inputimg" autocomplete="off" type="text"  name="stuBirthday" th:value="*{#dates.format(student.stuBirthday,'yyyy年MM月dd日')}">
                                 </div>
                             </div>
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label">邮箱：</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="email" id="email" th:field="*{user.email}">
+                                    <input class="form-control" type="text" name="stuEmail" id="stuEmail" th:field="*{student.stuEmail}">
                                 </div>
                             </div>
                             <div class="form-group marginLeft_100">
                                 <label class="col-sm-3 control-label">注册时间：</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control borderNone" type="text" name="createTime" readonly="true" th:value="${#dates.format(user.createTime,'yyyy年MM月dd日')}">
+                                    <input class="form-control borderNone" type="text" name="stuCreateTime" readonly="true" th:value="${#dates.format(student.stuCreateTime,'yyyy年MM月dd日')}">
                                 </div>
                             </div>
                         </div>
@@ -203,7 +203,7 @@
 
 <div th:include="include::footer"></div>
 <script>
-    var userId = '[[${user.userId}]]';
+    var stuUserId = '[[${student.stuUserId}]]';
     // console.log("个人信息");
     // console.log(accountId);
     /*用户信息-修改*/
@@ -214,18 +214,18 @@
 
     /*用户管理-重置密码*/
     function resetPwd() {
-        var url = ctx + 'system/user/profile/resetPwd/' + userId;
+        var url = ctx + 'system/student/profile/resetPwd/' + userId;
         $.modal.open("重置密码", url, '800', '450');
     }
 
     /*用户管理-头像*/
     function avatar() {
-        var url = ctx + 'system/user/profile/avatar/' + userId;
+        var url = ctx + 'system/student/profile/avatar/' + userId;
         $.modal.open("修改头像", url);
     }
 
 
-    var sexfl = '[[${user.sex}]]';
+    var sexfl = '[[${student.stuSex}]]';
     // console.log(sexfl);
     // console.log("性别");
     // console.log(sexfl);
@@ -237,19 +237,19 @@
 
     $(".form-horizontal").validate({
         rules:{
-            email:{
+            stuEmail:{
                 email:true,
                 isMail: true,
                 remote: {
-                    url: ctx + "system/user/checkEmailUnique",
+                    url: ctx + "system/student/checkEmailUnique",
                     type: "post",
                     dataType: "json",
                     data: {
-                        "userId": function() {
-                            return $("#userId").val();
+                        "stuUserId": function() {
+                            return $("#stuUserId").val();
                         },
-                        "email": function() {
-                            return $.common.trim($("#email").val());
+                        "stuEmail": function() {
+                            return $.common.trim($("#stuEmail").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -259,7 +259,7 @@
             }
         },
         messages: {
-            "email": {
+            "stuEmail": {
                 remote: "Email已经存在"
             },
         }
@@ -273,24 +273,24 @@
         }
     }
     function edit() {
-        var userId = $("input[name='userId']").val();
-        var QQ = $("input[name='QQ']").val();
-        var birthday = $("input[name='birthday']").val();
-        var email = $("input[name='email']").val();
-        var userName = $("input[name='userName']").val();
-        var sex = $('input[name=sex]:checked').val();
+        var stuUserId = $("input[name='stuUserId']").val();
+        var stuQQ = $("input[name='stuUserId']").val();
+        var stuBirthday = $("input[name='stuUserId']").val();
+        var stuEmail = $("input[name='stuUserId']").val();
+        var stuUserName = $("input[name='stuUserId']").val();
+        var stuSex = $('input[name=sex]:checked').val();
         console.log(sex);
         $.ajax({
             cache: true,
             type: "POST",
-            url: ctx + "system/user/profile/update",
+            url: ctx + "system/student/profile/update",
             data: {
-                "userId":userId,
-                "userName":userName,
-                "QQ": QQ,
-                "birthday": birthday,
-                "email": email,
-                "sex": sex
+                "stuUserId":stuUserId,
+                "stuUserName":stuUserName,
+                "stuQQ": stuQQ,
+                "stuBirthday": stuBirthday,
+                "stuEmail": stuEmail,
+                "stuSex": stuSex
             },
             async: false,
             error: function (request) {
