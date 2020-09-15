@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.system.personal.mapper.PersonalMapper">
+
+    <resultMap type="Personal" id="PersonalResult">
+        <result property="personalId" column="personal_id"/>
+        <result property="menuId" column="menu_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="picPath" column="pic_filepath"/>
+        <result property="url"      column="url"/>
+        <result property="roleId"  column="role_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectPersonalVo">
+        select personal_id, menu_id, user_id, dept_id
+        from sys_personal
+    </sql>
+
+    <select id="selectPersonalList" parameterType="Personal" resultMap="PersonalResult">
+        <include refid="selectPersonalVo"/>
+        <where>
+            <if test="personalId != null ">and personal_id = #{personalId}</if>
+            <if test="menuId != null ">and menu_id = #{menuId}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="deptId != null ">and dept_id = #{deptId}</if>
+        </where>
+    </select>
+
+    <select id="selectPersonalById" parameterType="Integer" resultMap="PersonalResult">
+        SELECT sp.personal_id,
+               sp.menu_id,
+               sp.parent_id,
+               sp.user_id,
+               sp.dept_id,
+               sm.picture_id
+        FROM sys_personal sp
+                 LEFT JOIN sys_menu sm on sm.menu_id = sp.menu_id
+        where sp.user_id = #{userId}
+        order by sm.order_num
+    </select>
+
+    <insert id="insertPersonal" parameterType="Personal">
+        insert into sys_personal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="personalId != null  ">personal_id,</if>
+            <if test="parentId !=null">parent_id,</if>
+            <if test="menuId != null  ">menu_id,</if>
+            <if test="userId != null  ">user_id,</if>
+            <if test="deptId != null  ">dept_id,</if>
+            <if test="createTime !=null">create_time</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="personalId != null  ">#{personalId},</if>
+            <if test="parentId !=null">#{parentId},</if>
+            <if test="menuId != null  ">#{menuId},</if>
+            <if test="userId != null  ">#{userId},</if>
+            <if test="deptId != null  ">#{deptId},</if>
+            <if test="createTime !=null">#{createTime}</if>
+
+        </trim>
+    </insert>
+
+    <update id="updatePersonal" parameterType="Personal">
+        update sys_personal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="menuId != null  ">menu_id = #{menuId},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="deptId != null  ">dept_id = #{deptId},</if>
+            <if test="parentId !=null">parent_id = #{parentId},</if>
+        </trim>
+        where personal_id = #{personalId}
+    </update>
+
+    <delete id="deletePersonalById" parameterType="Integer">
+        delete
+        from sys_personal
+        where personal_id = #{personalId}
+    </delete>
+
+    <delete id="deletePersonalByIds" parameterType="Integer">
+        delete
+        from sys_personal
+        where user_id = #{userId}
+    </delete>
+
+    <select id="selectMenuAndPicture" parameterType="Integer" resultMap="PersonalResult">
+        SELECT
+            spe.menu_id,
+            sm.menu_name,
+            spe.parent_id,
+            sm.picture_id,
+            sm.url,
+            sp.pic_filepath
+        FROM
+            sys_personal spe
+                LEFT JOIN sys_menu sm ON sm.menu_id = spe.menu_id
+                LEFT JOIN sys_picture sp ON sp.pic_id = sm.picture_id
+        WHERE
+            sm.menu_type != 'F'
+          AND sm.del_flag = 0
+          AND spe.user_id = #{userId}
+        ORDER BY
+            spe.parent_id,
+            spe.create_time,
+            sm.order_num
+    </select>
+    <select id="selectMenuNotInMenu" parameterType="Integer" resultMap="PersonalResult">
+        SELECT DISTINCT
+            sm.menu_id,
+            sm.menu_name,
+            sm.parent_id,
+            sm.picture_id,
+            sm.url,
+            sp.pic_filepath
+        FROM
+            sys_menu sm
+                LEFT JOIN sys_picture sp ON sp.pic_id = sm.picture_id
+                left join sys_personal sp on sp.menu_id =sm.menu_id
+                LEFT JOIN sys_role_menu rm ON sm.menu_id = rm.menu_id
+        WHERE
+            sm.menu_type != 'F'
+          and sm.menu_id not in(select sp.menu_id from sys_personal sp where parent_id !=0 and user_id=#{userId})
+          AND rm.role_id = #{roleId}
+          AND sm.del_flag = 0
+        ORDER BY
+            sm.parent_id,sm.order_num
+    </select>
+
+    <select id="selectAllMenu" parameterType="Integer" resultMap="PersonalResult">
+        SELECT sm.menu_id,
+               sm.menu_name,
+               sm.parent_id,
+               sm.url,
+               sp.pic_filepath
+        FROM sys_menu sm
+                 LEFT JOIN sys_picture sp ON sp.pic_id = sm.picture_id
+                 LEFT JOIN sys_role_menu rm ON sm.menu_id = rm.menu_id
+        WHERE sm.menu_type != 'F'
+          AND rm.role_id = #{roleId}
+          AND sm.del_flag = 0
+        ORDER BY parent_id,sm.order_num
+    </select>
+</mapper>

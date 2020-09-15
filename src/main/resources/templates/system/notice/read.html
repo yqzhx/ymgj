@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="notice-detail">
+        <h4 class="title">[[${notice.noticeTitle}]]</h4>
+        <div class="date">[[${#dates.format(notice.createTime,'yyyy-MM-dd HH:mm:ss')}]]</div>
+        <div class="line"></div>
+        <div class="content">
+            [[${notice.noticeContent}]]
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript"></script>
+</body>
+</html>

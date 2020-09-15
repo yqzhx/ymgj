@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-area-edit" th:object="${area}">
+            <input id="areaId" name="areaId" th:field="*{areaId}"  type="hidden">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="level">层级：</label>
+				<div class="col-sm-8">
+					<select disabled th:field="*{level}" class="form-control isSelect2" name="level" id="level" th:with="data=${@dict.getType('sys_area_level')}" required>
+						<option value="">---请选择---</option>
+						<option class="disabled" th:each="data:${data}" th:value="${data.dictValue}" th:text="${data.dictLabel}" ></option>
+					</select>
+				</div>
+			</div>
+			<div id="area"></div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">名称：</label>
+				<div class="col-sm-3">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text" required>
+				</div>
+				<label class="col-sm-2 control-label">拼音：</label>
+				<div class="col-sm-3">
+					<input id="pinyin" name="pinyin" th:field="*{pinyin}" class="form-control" type="text" required data-rule-isEN="true">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">首字母：</label>
+				<div class="col-sm-3">
+					<input id="first" name="first" th:field="*{first}" class="form-control" type="text" required data-rule-isEN="true" data-msg-isEN="请填写正确首字母">
+				</div>
+				<label class="col-sm-2 control-label">长途区号：</label>
+				<div class="col-sm-3">
+					<input id="code" name="code" th:field="*{code}" class="form-control" type="text" data-rule-isNum="true" data-msg-isNum="请输入正确的长途区号">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-2 control-label">邮编：</label>
+				<div class="col-sm-3">
+					<input id="zipCode" name="zipCode" th:field="*{zipCode}" class="form-control" type="text" data-rule-isZip="true">
+				</div>
+				<label class="col-sm-2 control-label">备注：</label>
+				<div class="col-sm-3">
+					<input id="shortName" name="shortName" th:field="*{shortName}" class="form-control" type="text" required>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/area";
+
+
+		var level = [[${area.level}]];
+        var provinceId = [[${provinceId}]];
+		var cityId = [[${cityId}]];
+
+        changeLevel();
+
+
+        function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-area-edit').serialize());
+	        }
+	    }
+
+
+	    function changeLevel(){
+		    if(level == 3){
+		        // 区级
+                var province = $('<div class="form-group"><label class="col-sm-2 control-label">所属省：</label><div class="col-sm-8"><select name="" id="province" class="form-control"></select></div></div>');
+                var city = $('<div class="form-group"><label class="col-sm-2 control-label">所属市：</label><div class="col-sm-8"><select name="pid" id="city" class="form-control"></select></div></div>');
+                $('#area').append(province).append(city);
+
+                $.initSelect({
+                    config:{
+                        el:'#province',
+                        url:'/system/area/list',
+                        list:'rows',
+                        value:'areaId',
+                        key:'name',
+                        init:provinceId,
+                        disabled:true,
+                        data:{
+                            level:1
+                        },
+                        children:{
+                            el:'#city',
+                            url:'/system/area/list',
+                            list:'rows',
+                            param:'pid',
+                            value:'areaId',
+                            init:cityId,
+                            key:'name',
+                            disabled:true,
+                        }
+                    }
+                })
+            }else if(level == 2){
+		        // 市级
+                var province = $('<div class="form-group"><label class="col-sm-2 control-label">所属省：</label><div class="col-sm-8"><select name="pid" id="province" class="form-control"></select></div></div>');
+                $('#area').append(province);
+                $.initSelect({
+                    config:{
+                        el:'#province',
+                        url:'/system/area/list',
+                        list:'rows',
+                        value:'areaId',
+                        key:'name',
+                        init:provinceId,      /*回显值*/
+                        disabled:true,
+                        data:{
+                            level:1
+                        }
+                    }
+                })
+            }
+        }
+
+
+        $("#form-area-edit").validate();
+
+
+
+	</script>
+</body>
+</html>

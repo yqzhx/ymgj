@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="content-box-flex">
+    <form id="formId"  class="form-inline">
+
+        <div class="col-sm-12 search-collapse">
+            <div class="form-group">
+                <label>消息标题：</label>
+                <input class="form-control" type="text" name="noticeTitle" id="noticeTitle"/>
+            </div>
+            <div class="form-group">
+                <label>单位类型：</label>
+                <span style="display: inline-block;width: 100px">
+                <select id="enterpriseType" name="enterpriseType" th:with="type=${@dict.getType('sys_enterprise_type')}"
+                        class="isSelect2 form-control" data-placeholder="--请选择--">
+                    <option value="">全部</option>
+                    <option value="-1">所有企业</option>
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <label>消息类型：</label>
+                <select id="noticeType" class="form-control" name="noticeType"></select>
+            </div>
+            <div class="form-group">
+                <label>消息状态：</label>
+                <select id="sendStatus" class="form-control" name="sendStatus"></select>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary  btn-sm" onclick="$.table.search()"><i
+                        class="fa fa-search"></i>&nbsp;搜索</a>
+                <a class="btn btn-warning  btn-sm" onclick="reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+            </div>
+
+        </div>
+    </form>
+<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+    <a class="btn btn-success" onclick="$.operate.add(null,{width:1200,height:700})"
+       shiro:hasPermission="system:notice:add">
+        <i class="fa fa-plus"></i> 添加
+    </a>
+</div>
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-table" data-mobile-responsive="true" class="text-nowrap" style="table-layout: auto;"></table>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "system/notice";
+    var prefixRecord = ctx + "system/noticeRecord";
+    var userData = [[${@userNameUtil.getUserList()}]];
+    var sendType = [[${@dict.getType('sys_send_type')}]];
+    var noticeType = [[${@dict.getType('sys_notice_type')}]];
+    var noticeStatus = [[${@dict.getType('sys_notice_status')}]];
+    var enterpriseType = [[${@dict.getType('sys_enterprise_type')}]];
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "消息通知",
+            search: false,
+            sortName: "updateTime",
+            sortOrder: "desc",
+            showRefresh: false,
+            showToggle: false,
+            showSearch: false,
+            showColumns: false,
+            showExport: false,
+            columns: [
+                {
+                    field: 'noticeId',
+                    title: '消息ID',
+                    visible: false
+                },
+                {
+                    field: 'noticeTitle',
+                    title: '消息标题',
+                    formatter: function (value, row, index) {
+                        return '<a href="#" class="link" onclick="openNoticeInfo(' + row.noticeId + ')">' +
+                            row.noticeTitle + '</a> '
+                    }
+                },
+                {
+                    field: 'noticeType',
+                    title: '消息类型',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(noticeType, value);
+                    }
+                },
+                {
+                    field: 'sendType',
+                    title: '发送类型',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(sendType, value);
+                    }
+                },
+                {
+                    field: 'enterpriseType',
+                    title: '单位类型',
+                    formatter: function (value, row, index) {
+                        if (value === -1) {
+                            return "所有企业";
+                        } else {
+                            return $.table.selectDictLabel(enterpriseType, value);
+                        }
+                    }
+                },
+                {
+                    field: 'sendTo',
+                    title: '接收者',
+                    formatter: function (value, item, index) {
+                        if (value === -1) {
+                            return '<span class="label label-success">所有</span>';
+                        } else {
+                            return '<span class="label label-warning">个人</span>';
+                        }
+                    }
+                },
+                {
+                    field: 'sendStatus',
+                    title: '消息状态',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(noticeStatus, value);
+                    }
+                },
+                {
+                    field: 'updateBy',
+                    title: '提交人',
+                    formatter: function (value, row, index) {
+                        return $.table.selectUserName(userData, value);
+                    }
+                },
+                {
+                    field: 'updateTime',
+                    title: '提交时间'
+                },
+                {
+                    field: 'bz',
+                    title: '操作',
+                    align: 'left',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a href="#" class="link" onclick="openNotice(' + row.noticeId + ')">接收人详情</a> ');
+                        if (row.sendStatus === 0) {
+                            actions.push('| <a class="link" onclick="$.operate.edit(' + row.noticeId + ',{width:1200,height:700})" shiro:hasPermission="system:notice:edit">修改消息</a> ');
+                            actions.push('|  <a class="link" onclick="$.operate.remove(' + row.noticeId + ')" shiro:hasPermission="system:notice:remove">删除消息</a> ');
+                            actions.push('| <a class="link" onclick="send(' + row.noticeId + ')" shiro:hasPermission="system:notice:send">发送消息</a> ');
+                        }
+                        return actions.join('');
+                    }
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+
+    //消息详情
+    function openNotice(noticeId) {
+        $.modal.open("消息接收详情", prefix + '/noticeRecord/' + noticeId, 1100, 600, 1);
+    }
+
+    //发送消息
+    function send(rows) {
+        $.modal.confirm('确认是否发送', function () {
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: prefixRecord + "/send",
+                data: {
+                    "noticeId": rows
+                },
+                async: false,
+                error: function () {
+                    $.modal.alertError("系统错误");
+                },
+                success: function (data) {
+                    $.operate.ajaxSuccess(data)
+                }
+            });
+        })
+    }
+
+    //企业
+    // var select = $.initSelect({
+    //     config: {
+    //         el: "#enterpriseType",
+    //         url: "/system/dict/data/list",
+    //         data: {
+    //             dictType: "sys_enterprise_type"
+    //         },
+    //         value: 'dictValue',
+    //         key: 'dictLabel',
+    //         style: {
+    //             width: '100'
+    //         },
+    //         children: {
+    //             el: "#enterpriseId",
+    //             url: "/system/person/list",
+    //             param: 'dictValue',
+    //             key: 'enterpriseName',
+    //             value: 'enterpriseId',
+    //             data: {
+    //                 flag: 1
+    //             },
+    //             pData: {
+    //                 type: '#enterpriseType'
+    //             },
+    //             style: {
+    //                 width: '250'
+    //             }
+    //         }
+    //     }
+    // });
+
+    //通知类型
+    var select1 = $.initSelect({
+        config: {
+            el: "#noticeType",
+            url: "/system/dict/data/list",
+            data: {
+                dictType: "sys_notice_type"
+            },
+            value: 'dictValue',
+            key: 'dictLabel',
+            style: {
+                width: '100'
+            }
+        }
+    });
+
+    //通知状态
+    var select2 = $.initSelect({
+        config: {
+            el: "#sendStatus",
+            url: "/system/dict/data/list",
+            data: {
+                dictType: "sys_notice_status"
+            },
+            value: 'dictValue',
+            key: 'dictLabel',
+            style: {
+                width: '100'
+            }
+        }
+    });
+
+    // 重置级联条件
+    function reset() {
+        // select.reset();
+        $.form.reset();
+        select1.reset();
+        select2.reset();
+        // $('#enterpriseType').prop("selected",'selected');
+        $('#noticeTitle').val("");
+        $('#noticeContent').val("");
+        $('#sendStatus').val("");
+        $('#noticeType').val("");
+    }
+
+    function openNoticeInfo(noticeId) {
+        // $.modal.open("消息详情", prefix + '/read/' + noticeId, 1100, 600, 1);
+        createIframe(prefix + '/read/' + noticeId, '消息详情', 'notice');
+        $.ajax({
+            url: "/system/notice/read",
+            type: 'post',
+            data: {
+                "noticeRecordId": noticeId
+            },
+            traditional: true,
+            success: function (data) {
+                $.table.refresh();
+                getNoReadNotice();
+                刷新右上角消息数
+                top.getNoRead();
+            },
+            error: function () {
+                $.modal.alertError("系统错误");
+            }
+        })
+    }
+</script>
+</body>
+</html>

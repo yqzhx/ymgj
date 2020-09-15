@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.operate.mfrsLinkman.mapper.MfrsLinkmanMapper">
+    
+    <resultMap type="MfrsLinkman" id="MfrsLinkmanResult">
+        <result property="mfrsLinkmanId"    column="mfrs_linkman_id"    />
+        <result property="mfrsId"    column="mfrs_Id"    />
+        <result property="linkName"    column="link_name"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="address"    column="address"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="mail"    column="mail"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="job"    column="job"    />
+    </resultMap>
+	
+	<sql id="selectLinkmanVo">
+        select
+               mfrs_linkman_id,job, mfrs_Id, link_name, id_card, address, mobile,
+               telephone, mail, del_flag, create_by, create_time, update_by, update_time, img_url
+        from mfrs_linkman
+    </sql>
+	
+    <select id="selectLinkmanList" parameterType="MfrsLinkman" resultMap="MfrsLinkmanResult">
+        <include refid="selectLinkmanVo"/>
+        <where>  
+            <if test="mfrsLinkmanId != null "> and mfrs_linkman_id = #{mfrsLinkmanId}</if>
+             <if test="mfrsId != null "> and mfrs_Id = #{mfrsId}</if>
+             <if test="linkName != null  and linkName != '' "> and link_name like concat('%',#{linkName},'%')</if>
+             <if test="idCard != null  and idCard != '' "> and id_card = #{idCard}</if>
+             <if test="address != null  and address != '' "> and address = #{address}</if>
+             <if test="mobile != null  and mobile != '' "> and mobile like concat('%',#{mobile},'%')</if>
+             <if test="telephone != null  and telephone != '' "> and telephone = #{telephone}</if>
+             <if test="mail != null  and mail != '' "> and mail = #{mail}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="imgUrl != null "> and img_url = #{imgUrl}</if>
+             and del_flag = 0
+         </where>
+    </select>
+    
+    <select id="selectLinkmanById" parameterType="Integer" resultMap="MfrsLinkmanResult">
+        <include refid="selectLinkmanVo"/>
+        where mfrs_linkman_id = #{mfrsLinkmanId}
+    </select>
+        
+    <insert id="insertLinkman" parameterType="MfrsLinkman">
+        insert into mfrs_linkman
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mfrsLinkmanId != null  ">mfrs_linkman_id,</if>
+			<if test="mfrsId != null  ">mfrs_Id,</if>
+			<if test="linkName != null  and linkName != ''  ">link_name,</if>
+			<if test="idCard != null  and idCard != ''  ">id_card,</if>
+			<if test="address != null  and address != ''  ">address,</if>
+			<if test="mobile != null  and mobile != ''  ">mobile,</if>
+			<if test="telephone != null  and telephone != ''  ">telephone,</if>
+			<if test="mail != null  and mail != ''  ">mail,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="imgUrl != null  ">img_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mfrsLinkmanId != null  ">#{mfrsLinkmanId},</if>
+			<if test="mfrsId != null  ">#{mfrsId},</if>
+			<if test="linkName != null  and linkName != ''  ">#{linkName},</if>
+			<if test="idCard != null  and idCard != ''  ">#{idCard},</if>
+			<if test="address != null  and address != ''  ">#{address},</if>
+			<if test="mobile != null  and mobile != ''  ">#{mobile},</if>
+			<if test="telephone != null  and telephone != ''  ">#{telephone},</if>
+			<if test="mail != null  and mail != ''  ">#{mail},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="imgUrl != null  ">#{imgUrl},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateLinkman" parameterType="MfrsLinkman">
+        update mfrs_linkman
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mfrsId != null  ">mfrs_Id = #{mfrsId},</if>
+            <if test="linkName != null  and linkName != ''  ">link_name = #{linkName},</if>
+            <if test="idCard != null  and idCard != ''  ">id_card = #{idCard},</if>
+            <if test="address != null  and address != ''  ">address = #{address},</if>
+            <if test="mobile != null  and mobile != ''  ">mobile = #{mobile},</if>
+            <if test="telephone != null  and telephone != ''  ">telephone = #{telephone},</if>
+            <if test="mail != null  and mail != ''  ">mail = #{mail},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="imgUrl != null  ">img_url = #{imgUrl},</if>
+        </trim>
+        where mfrs_linkman_id = #{mfrsLinkmanId}
+    </update>
+
+	<delete id="deleteLinkmanById" parameterType="Integer">
+        delete from mfrs_linkman where mfrs_linkman_id = #{mfrsLinkmanId}
+    </delete>
+	
+    <delete id="deleteLinkmanByIds" parameterType="String">
+        update  mfrs_linkman set del_flag = 1 where mfrs_linkman_id in
+        <foreach item="mfrsLinkmanId" collection="array" open="(" separator="," close=")">
+            #{mfrsLinkmanId}
+        </foreach>
+    </delete>
+    
+</mapper>

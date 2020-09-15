@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style>
+    .select2 {
+        display: inline-block;
+        width: 180px !important;
+    }
+</style>
+<body class="content-box-flex">
+<div class="col-sm-12 search-collapse">
+    <form id="formId">
+        <div class="select-list">
+            <ul>
+                <li>
+                    所属地区：
+                    <select id="provinceId" name="provinceId"></select>
+                    <select id="cityId" name="cityId"></select>
+                    <select id="countyId" name="countyId"></select>
+                </li>
+                <li>
+                    <a class="btn btn-primary  btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-warning  btn-sm" onclick="reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+    <a class="btn btn-success" onclick="$.operate.add(null,{width:1200,height:600})">
+        <i class="fa fa-plus"></i> 添加
+    </a>
+    <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit(null,{width:1200,height:600})">
+        <i class="fa fa-edit"></i> 修改</a>
+    <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()">
+        <i class="fa fa-remove"></i> 删除
+    </a>
+<!--    <a class="btn btn-warning" onclick="$.table.exportExcel()">-->
+<!--        <i class="fa fa-download"></i> 导出-->
+<!--    </a>-->
+</div>
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-table" data-mobile-responsive="true"></table>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "system/area";
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "所属地区",
+            sortName: "updateTime",
+            sortOrder: "desc",
+            search: false,
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'areaId',
+                    title: 'ID',
+                    visible: false
+                },
+                {
+                    field: 'name',
+                    title: '所属地区名称'
+                },
+                {
+                    field: 'shortName',
+                    title: '所属地区简称'
+                },
+                {
+                    field: 'pinyin',
+                    title: '拼音'
+                },
+                {
+                    field: 'code',
+                    title: '长途区号'
+                },
+                {
+                    field: 'zipCode',
+                    title: '邮编'
+                },
+                {
+                    field: 'first',
+                    title: '首字母'
+                },
+                {
+                    field: 'updateBy',
+                    title: '提交人',
+                    width: 80
+                },
+                {
+                    field: 'updateTime',
+                    title: '提交时间',
+                    width: 180
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+
+    // 省市区级联
+    var select = $.initSelect({
+        config: {
+            el: '#provinceId',
+            url: '/system/area/list',
+            value: 'areaId',
+            key: 'name',
+            placeholder: '请选择省份',
+            style: {
+                width: '180px'
+            },
+            data: {
+                level: 1
+            },
+            children: {
+                el: '#cityId',
+                value: 'areaId',
+                key: 'name',
+                url: '/system/area/list',
+                param: 'pid',
+                placeholder: '请选择城市',
+                style: {
+                    width: '180px'
+                },
+                children: {
+                    el: '#countyId',
+                    value: 'areaId',
+                    key: 'name',
+                    url: '/system/area/list',
+                    param: 'pid',
+                    placeholder: '请选择区县',
+                    style: {
+                        width: '180px'
+                    }
+                }
+            }
+        }
+    });
+
+    // 重置级联条件
+    function reset() {
+        select.reset();
+    }
+</script>
+</body>
+</html>

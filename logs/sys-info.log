@@ -1,0 +1,21 @@
+08:59:38.275 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on DESKTOP-U151T1K with PID 8888 (started by lenovo in D:\idea project\ymgj\ymgj)
+08:59:38.285 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: dev
+08:59:42.689 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8989"]
+08:59:42.700 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+08:59:42.701 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+08:59:42.705 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_221\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xftp 6\;C:\Program Files (x86)\NetSarang\Xshell 6\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\lenovo\AppData\Local\Programs\Python\Python38\Scripts;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Users\lenovo\AppData\Local\Microsoft\WindowsApps;D:\IntelliJ IDEA 2019.2.3\bin;;C:\Users\lenovo\AppData\Local\Programs\Python\Python38;C:\Users\lenovo\AppData\Local\Programs\Python\Python38\Scripts;;D:\VS Code\Microsoft VS Code\bin;C:\Program Files\Bandizip\;.]
+08:59:42.860 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+08:59:44.599 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+08:59:45.642 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+08:59:45.643 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+08:59:46.535 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+08:59:46.550 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+08:59:46.609 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+08:59:46.784 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8989"]
+08:59:46.786 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+08:59:46.805 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 9.042 seconds (JVM running for 10.798)
+09:00:02.357 [http-nio-8989-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+09:00:02.402 [http-nio-8989-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+09:00:13.126 [http-nio-8989-exec-5] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+09:30:02.405 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+09:30:02.608 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.

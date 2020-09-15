@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"><title>营业执照图片</title></head>
+<body class="gray-bg">
+<!--有图-->
+<div th:if="${singlePic != null}" class="preview-list" id="imgs">
+    <div class="preview-wrapper">
+        <div class="img-box">
+            <img th:src="${singlePic.picture?.picPath}" th:alt="${item.picture?.name}" data-jqthumb-width="216" data-jqthumb-height="216">
+        </div>
+        <div class="info">
+            <!--            <div class="name">来源：康华生物有限公司</div>-->
+            <div class="date">
+                发布时间：[[${#dates.format(singlePic.picture?.createTime,'yyyy-MM-dd')}]]
+                <span class="handler">
+                    <i class="iconfont iconGroup- yulan"></i>
+                    <i class="iconfont iconxiazai1 download"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--无图-->
+<div th:if="${singlePic == null}" class="preview-list no-preview"></div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    // 初始化图片预览
+    $('#imgs').initPreview();
+    function submitHandler(){
+        $.modal.close();
+    }
+</script>
+</body>
+</html>

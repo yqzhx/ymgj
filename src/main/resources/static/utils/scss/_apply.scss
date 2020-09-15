@@ -1,0 +1,30 @@
+.apply {
+  padding: 30px;
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  h3 {
+    font-size: 14px;
+    color: #999;
+    font-weight: normal;
+  }
+  .form {
+    padding-bottom: 50px;
+    .lab {
+      width: 180px;
+      text-align: left;
+    }
+    .input-w {
+      width: 275px;
+    }
+    .line {
+      margin: 30px 0;
+      height: 1px;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}

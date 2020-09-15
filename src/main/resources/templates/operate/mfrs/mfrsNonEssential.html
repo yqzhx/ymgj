@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="content-box">
+<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+</div>
+<div style="border:1px solid #dadada;font-size: 18px;padding: 10px;margin-left:9px;color: #666666;margin-bottom: 40px;">
+    合作企业：[[${companyName}]]
+</div>
+<div class="preview-cate">
+    <div class="cate-box">
+        <a href="javascript:;" class="cate" th:onclick="${isExist[6] == true ? 'upload(6)' :''}">
+            <img th:src="${isExist[6] == true ? '/img/dianjichakan.png' : '/img/zanwu.png'}" alt=""  class="state-mark">
+            <div class="name">营业执照</div>
+        </a>
+    </div>
+    <div class="cate-box" >
+        <a href="javascript:;" class="cate" th:onclick="${isExist[7] == true ? 'upload(7)' :''}">
+            <img th:src="${isExist[7] == true ? '/img/dianjichakan.png' : '/img/zanwu.png'}" alt=""  class="state-mark">
+            <div class="name">其它许可证</div>
+        </a>
+    </div>
+
+
+</div>
+
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "operate/mfrs";
+    var delFlag = '';
+    function upload(type) {
+        if (delFlag == 9) {
+            $.modal.alertWarning("审核中，无法修改资质");
+        } else {
+            var url = prefix + "/uploadPic?mfrsId=" + [[${mfrsId}]] + "&type=" + type;
+            $.modal.open('查看资质', url, null, null,1);
+        }
+    }
+</script>
+</body>
+</html>

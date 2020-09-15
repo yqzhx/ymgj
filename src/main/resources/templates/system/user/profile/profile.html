@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>个人信息</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <link th:href="@{/css/iconfont.css}" rel="stylesheet"/>
+    <style>
+        html,body,.gray-bg{background: #FFFFFF;}
+        .control-label {
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        .form-control-static {
+            padding-left: 80px;
+        }
+
+        .icon {
+            display: inline-block;
+            font-size: 13px;
+            vertical-align: middle;
+            transform: scale(1.5);
+            margin-left: 10px;
+        }
+        .wraperpading{padding:0;background: #FFFFFF;}
+        .contact-box {
+            border: none;
+        }
+        .bzBtn{border:none;width:100px;height:30px;line-height: 30px;color:#FFFFFF;background: #457DD8;margin:auto;position:absolute;left:0;right:0;top:30px;}
+        .baseMessage{font-size:16px;padding-left:126px;padding-top:30px;}
+        .baseMessage span:nth-child(1){color:#447CD6;vertical-align:text-bottom;display: inline-block;margin-right:15px;}
+        .wsmessage p{padding:10px;border:1px solid #D0D0D0;background: #FBFBFB;text-indent: 15px;margin-top:20px;}
+        .marginLeft_100{margin-left:-100px!important;}
+        input[type="radio"] + label::before {
+            content: "\a0"; /*不换行空格*/
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 15px;
+            width: 1em;
+            height: 1em;
+            margin-right: .4em;
+            border-radius: 50%;
+            border: 1px solid #4976C2;
+            text-indent: .15em;
+            line-height: 1;
+        }
+        input[type="radio"]:checked + label::before {
+            background-color: #4976C2;
+            background-clip: content-box;
+            padding: .2em;
+        }
+        input[type="radio"] {
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+        }
+        .iconfont{right:10px!important;}
+        .borderNone{border: none;background: #FFFFFF!important;padding-left: 0;}
+        label{line-height: 24px;}
+        .form-control:focus, .single-line:focus {
+            border-color: #66afe9!important;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content wraperpading">
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+<!--                <div class="ibox-title">-->
+<!--&lt;!&ndash;                    <h5 style="font-weight: normal;font-size: 14px;letter-spacing: 2px;">基本信息</h5>&ndash;&gt;-->
+<!--                    <div class="ibox-tools" style="margin-top: -10px;">-->
+<!--                        &lt;!&ndash;<a class="dropdown-toggle" data-toggle="dropdown" href="profile.html#">&ndash;&gt;-->
+<!--                            &lt;!&ndash;&lt;!&ndash;<i class="iconfont icontubiaozhenggai-" style="font-size: 24px;color: #666666;"></i>&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;</a>&ndash;&gt;-->
+<!--                        <ul class="dropdown-menu dropdown-user">-->
+<!--                            &lt;!&ndash;<li><a href="javascript:edit()">修改信息</a></li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a href="javascript:resetPwd()">修改密码</a></li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a href="javascript:avatar()">修改头像</a></li>&ndash;&gt;-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="baseMessage"><span>|</span><span>基本信息</span></div>-->
+<!--                <div class="col-lg-12 wsmessage">-->
+<!--                    <p>请完善一下信息，方便我们更好的为您服务.</p>-->
+<!--                </div>-->
+                <div class="contact-box col-sm-12">
+                    <form class="form-horizontal" style="margin-left:80px;margin-top:15px;" >
+                        <div class="col-lg-6">
+                            <img src="/img/basePerson.png" style="display:inline-block;vertical-align: sub;margin-right: 15px;" alt=""><h5 style="display:inline-block;margin-bottom: 30px;font-size: 16px;color:#447CD6;font-weight: normal;">个人信息</h5>
+                            <input name="userId"  type="hidden"  th:field="*{user.userId}" />
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label ">账号名：</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control borderNone" type="text" readonly="true" th:field="*{user.loginName}"/>
+                                </div>
+                            </div>
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label ">用户姓名：</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control " name="userName" type="text"  th:field="*{user.userName}"/>
+                                </div>
+                            </div>
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label">性别：</label>
+                                <div class="col-sm-8" style="line-height: 35px;">
+                                    <div style="display: inline-block">
+                                        <input type="radio" id="radio1" th:field="*{user.sex}" name="sex" value="0">
+                                        <label for="radio1" style="margin-right:15px;">男</label>
+                                    </div>
+                                    <div style="display: inline-block">
+                                        <input type="radio" id="radio2" th:field="*{user.sex}" name="sex" value="1">
+                                        <label for="radio2">女</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label ">手机：</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control borderNone" type="text" readonly="true" th:field="*{user.phonenumber}"/>
+                                </div>
+                            </div>
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label">QQ：</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="QQ" th:field="*{user.QQ}">
+                                </div>
+                            </div>
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label">生日：</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control time-inputimg" autocomplete="off" type="text"  name="birthday" th:value="*{#dates.format(user.birthday,'yyyy年MM月dd日')}">
+                                </div>
+                            </div>
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label">邮箱：</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="email" id="email" th:field="*{user.email}">
+                                </div>
+                            </div>
+                            <div class="form-group marginLeft_100">
+                                <label class="col-sm-3 control-label">注册时间：</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control borderNone" type="text" name="createTime" readonly="true" th:value="${#dates.format(user.createTime,'yyyy年MM月dd日')}">
+                                </div>
+                            </div>
+                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-sm-3 control-label">认证信息</label>-->
+<!--                            <div class="col-sm-9" th:hidden="${company != null && company.companyName != '' && company.status == 1}">-->
+<!--                                <p class="form-control-static" style="font-size: 0;">-->
+<!--                                    <span style="font-size: 13px;vertical-align: middle;">未认证</span>-->
+<!--                                    <i class="iconfont iconweirenzheng1 icon" style="color: #f8ac59;"></i>-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-9" th:hidden="${company == null || company.companyName == '' || company.status != 1}">-->
+<!--                                <p class="form-control-static" style="font-size: 0;">-->
+<!--                                    <span style="font-size: 13px;vertical-align: middle;">已认证</span>-->
+<!--                                    <i class="iconfont iconyirenzheng icon" style="color: #1ab394;"></i>-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <!--<div class="localUnit col-lg-6">-->
+                            <!--<img src="/img/baseCity.png" style="display:inline-block;vertical-align: sub;margin-right: 15px;" alt=""><h5 style="display:inline-block;margin-bottom: 30px;font-size: 16px;color:#447CD6;font-weight: normal;">所属单位</h5>-->
+                            <!--<div class="form-group marginLeft_100">-->
+                                <!--<label class="col-sm-3 control-label">单位名称：</label>-->
+                                <!--<div class="col-sm-8">-->
+                                    <!--<input class="form-control borderNone" type="text" readonly="true" th:value ="${company==null?'-':company.companyName}">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group marginLeft_100">-->
+                                <!--<label class="col-sm-3 control-label">组织机构：</label>-->
+                                <!--<div class="col-sm-8">-->
+                                    <!--<input class="form-control borderNone" type="text" readonly="true" th:value="${user.dept!=null?user.dept.deptName:'-'}">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group marginLeft_100">-->
+                                <!--<label class="col-sm-3 control-label">业务角色：</label>-->
+                                <!--<div class="col-sm-8">-->
+                                    <!--<p> <input class="form-control borderNone" type="text" readonly="true" th:value="${user.roleArr==null||user.roleArr==''?'-':user.roleArr}"></p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="form-group marginLeft_100">
+<!--                            <label class="col-sm-3 control-label"></label>-->
+                            <div class="col-sm-5">
+                                <input type="button"  class="bzBtn" onclick="submitHandler()" value="保存">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="include::footer"></div>
+<script>
+    var userId = '[[${user.userId}]]';
+    // console.log("个人信息");
+    // console.log(accountId);
+    /*用户信息-修改*/
+    // function edit() {
+    //     var url = ctx + "system/user/profile/edit/" + userId;
+    //     $.modal.open("修改用户", url, '800', '450');
+    // }
+
+    /*用户管理-重置密码*/
+    function resetPwd() {
+        var url = ctx + 'system/user/profile/resetPwd/' + userId;
+        $.modal.open("重置密码", url, '800', '450');
+    }
+
+    /*用户管理-头像*/
+    function avatar() {
+        var url = ctx + 'system/user/profile/avatar/' + userId;
+        $.modal.open("修改头像", url);
+    }
+
+
+    var sexfl = '[[${user.sex}]]';
+    // console.log(sexfl);
+    // console.log("性别");
+    // console.log(sexfl);
+    if(sexfl=="男"){
+        $('#radio1').prop('checked', 'true');
+    }else if(sexfl=="女"){
+        $('#radio2').prop('checked', 'true');
+    }
+
+    $(".form-horizontal").validate({
+        rules:{
+            email:{
+                email:true,
+                isMail: true,
+                remote: {
+                    url: ctx + "system/user/checkEmailUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "userId": function() {
+                            return $("#userId").val();
+                        },
+                        "email": function() {
+                            return $.common.trim($("#email").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            }
+        },
+        messages: {
+            "email": {
+                remote: "Email已经存在"
+            },
+        }
+    });
+    function submitHandler(e) {
+        // alert("1");
+        if ($(".form-horizontal").validate().form()) {
+            // $.modal.alertError("邮箱错误");
+           // $.operate.save(ctx + "system/user/profile/update", $('.form-horizontal').serialize());
+            edit();
+        }
+    }
+    function edit() {
+        var userId = $("input[name='userId']").val();
+        var QQ = $("input[name='QQ']").val();
+        var birthday = $("input[name='birthday']").val();
+        var email = $("input[name='email']").val();
+        var userName = $("input[name='userName']").val();
+        var sex = $('input[name=sex]:checked').val();
+        console.log(sex);
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: ctx + "system/user/profile/update",
+            data: {
+                "userId":userId,
+                "userName":userName,
+                "QQ": QQ,
+                "birthday": birthday,
+                "email": email,
+                "sex": sex
+            },
+            async: false,
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            },
+            success: function (data) {
+                if(data.code == 0){
+                    if(sex == 0){
+                        $("#userimage",top.window.document).attr('src','/img/avatar_m.png')
+                    }else if(sex == 1){
+                        $("#userimage",top.window.document).attr('src','/img/avatar_w.png')
+                    }
+                    $.modal.msgSuccess("保存成功");
+                }
+                // $.operate.successCallback(data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

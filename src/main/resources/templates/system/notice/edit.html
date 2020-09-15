@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-notice-edit" th:object="${notice}">
+        <input id="noticeId" name="noticeId" th:field="*{noticeId}" type="hidden">
+        <div class="form-group">
+            <label for="noticeType" class="col-sm-2 control-label">消息类型：</label>
+            <div class="col-sm-3 input-box validate">
+                <select name="noticeType" id="noticeType" class="form-control " required></select>
+            </div>
+            <label for="enterpriseType" class="col-sm-2 control-label">单位类型：</label>
+            <div class="col-sm-3 input-box validate">
+                <select name="enterpriseType" id="enterpriseType" class="form-control" required></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="provinceId" >所属地区：</label>
+            <div class="col-sm-3 input-box validate" >
+                <select name="provinceId" id="provinceId" class="form-control" ></select>
+            </div>
+            <div class="col-sm-3 input-box validate">
+                <select name="cityId" id="cityId" ></select>
+                <input type="hidden" name="cityName" class="form-control" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="enterpriseId" class="col-sm-2 control-label">企业名称：</label>
+            <div class="col-sm-3 input-box validate">
+                <select name="enterpriseId" id="enterpriseId" class="form-control"  required></select>
+            </div>
+            <label for="sendTo" class="col-sm-2 control-label">接收者：</label>
+            <div class="col-sm-3 input-box validate">
+                <select name="sendTo" id="sendTo" class="form-control" required></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">消息标题：</label>
+            <div class="col-sm-8">
+                <input id="noticeTitle" name="noticeTitle" class="form-control" type="text" th:value="*{noticeTitle}" required maxlength="20">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">消息内容：</label>
+            <div class="col-sm-8">
+                <textarea id="noticeContent" name="noticeContent" class="form-control" rows="4" th:text="*{noticeContent}" required maxlength="500" style="height: 300px" placeholder="输入字数最多不超过500字"></textarea>
+            </div>
+        </div>
+        <input type="hidden" name="sendStatus" th:value="*{sendStatus}">
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    console.log( [[${notice.noticeType}]]);
+    var prefix = ctx + "system/notice";
+    $("#form-notice-edit").validate({
+        rules: {
+            xxxx: {
+                required: true,
+            },
+        }
+    });
+
+    $.initSelect({
+        config: {
+            el: "#noticeType",
+            url: "/system/dict/data/list",
+            data: {
+                dictType: "sys_notice_type"
+            },
+            init:'[[${notice.noticeType}]]',
+            value: 'dictValue',
+            key: 'dictLabel'
+        }
+    });
+
+    $.initSelect({
+        config: {
+            el: '#provinceId',
+            url: '/system/area/list',
+            value: 'areaId',
+            key: 'name',
+            data: {
+                level: 1
+            },
+            placeholder: '请选择省份',
+            onChange: function () {
+                $('input[name=provinceId]').val($("#provinceId").select2('val'));
+            },
+            children: {
+                el: '#cityId',
+                value: 'areaId',
+                key: 'name',
+                url: '/system/area/list',
+                param: 'pid',
+                placeholder: '请选择城市',
+                onChange: function () {
+                    $('input[name=cityId]').val($("#cityId").select2('val'));
+                    $('input[name=cityName]').val($("#cityId").select2('data')[0].text);
+                },
+                children: {
+                    el: "#enterpriseId",
+                    url: "/system/person/list",
+                    param: 'cityId',
+                    key: 'enterpriseName',
+                    value: 'enterpriseId',
+                    data: {
+                        flag: 1,
+                        userType: 2
+                    },
+                    pData: {
+                        type: '#enterpriseType'
+                    },
+                    // extraOptions: [{
+                    //     text: '所有人',
+                    //     value: -1
+                    // }]
+                }
+            }
+        }
+    });
+
+    if ([[${notice.enterpriseType}]]==-1){
+        $('#provinceId').attr("disabled",true);
+        $('#cityId').attr("disabled",true);
+    }
+    $.initSelect({
+        config: {
+            el: "#enterpriseType",
+            url: "/system/dict/data/list",
+            data: {
+                dictType: "sys_enterprise_type"
+            },
+            init: "[[${notice.enterpriseType == null ? -1 : notice.enterpriseType}]]",
+            value: 'dictValue',
+            key: 'dictLabel',
+            extraOptions: [{
+                text: '所有企业',
+                value: -1
+            }],
+            onchange:function(){
+                if ($('#enterpriseType').val() != -1){
+                    $('#provinceId').attr("disabled",false);
+                    $('#cityId').attr("disabled",true);
+                }
+            },
+            children: {
+                el: "#enterpriseId",
+                url: "/system/person/list",
+                param: 'dictValue',
+                key: 'enterpriseName',
+                init: "[[${notice.enterpriseId == null ? -1 : notice.enterpriseId }]]",
+                value: 'enterpriseId',
+                data: {
+                    flag: 1
+                },
+                pData: {
+                    type: '#enterpriseType'
+                },
+                extraOptions: [{
+                    text: '所有人',
+                    value: -1
+                }],
+                children: {
+                    el: "#sendTo",
+                    url: "/system/person/list",
+                    param: 'enterpriseId',
+                    init: "[[${notice.sendTo == null ? -1 : notice.sendTo}]]",
+                    key: 'loginName',
+                    value: 'id',
+                    extraOptions: [{
+                        text: '所有人',
+                        value: -1
+                    }]
+                }
+            }
+        }
+    });
+
+    //通知类型
+
+
+
+
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-notice-edit').serialize());
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.operate.mfrs.mapper.MfrsPictureMapper">
+    
+    <resultMap type="MfrsPicture" id="MfrsPictureResult">
+        <result property="mfrsPictureId"    column="mfrs_picture_id"    />
+        <result property="mfrsId"    column="mfrs_id"    />
+        <result property="mfrsPrestoreId"    column="mfrs_prestore_id"    />
+        <result property="picId"    column="pic_id"    />
+        <result property="state"    column="state"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <association property="picture" column="picture" javaType="Picture">
+            <result property="picId" column="pic_id"/>
+            <result property="picFilepath" column="pic_filepath"/>
+            <result property="name" column="name"/>
+            <result property="type" column="type"/>
+            <result property="createTime" column="create_time"/>
+        </association>
+    </resultMap>
+
+
+    <!--合作企业资质查看-->
+    <select id="selectPictureByMfrsIdAndType" parameterType="MfrsPicture" resultMap="MfrsPictureResult">
+        select
+            p.pic_id,p.pic_filepath,p.name,p.type,p.old_name,d.mfrs_prestore_id,p.create_time
+        from
+            dis_mfrs_picture d
+                left join sys_picture p ON d.pic_id = p.pic_id and d.del_flag = 0
+        where d.mfrs_id = #{mfrsId} and p.type = #{type} and p.del_flag = 0
+    </select>
+
+    <!--查询最新的资质-->
+    <select id="selectPictureByMfrsIdAndTypeOther" parameterType="MfrsPicture" resultMap="MfrsPictureResult">
+        select
+             p.pic_id,p.pic_filepath,p.name,p.type,p.old_name,p.create_time,d.mfrs_id
+        from
+             dis_mfrs_picture d
+        left join sys_picture p ON d.pic_id = p.pic_id and d.del_flag = 0
+        <where>
+            <if test="mfrsPrestoreId != null and mfrsId == -1">
+                and d.mfrs_prestore_id = #{mfrsPrestoreId} and p.type = #{type} and p.del_flag = 0
+            </if>
+            <if test="mfrsPrestoreId != null and mfrsId != -1">
+                and d.mfrs_prestore_id=(select mfrs_prestore_id from dis_mfrs_prestore where mfrs_id=#{mfrsId}
+                and d.del_flag= 0 order by create_time  desc limit 1) and p.type = #{type} and p.del_flag = 0
+            </if>
+        </where>
+    </select>
+	
+	<sql id="selectMfrsPictureVo">
+        select mfrs_picture_id, mfrs_id, mfrs_prestore_id, pic_id, state, del_flag, create_by, create_time, update_by, update_time from dis_mfrs_picture
+    </sql>
+	
+    <select id="selectMfrsPictureList" parameterType="MfrsPicture" resultMap="MfrsPictureResult">
+        <include refid="selectMfrsPictureVo"/>
+        <where>  
+            <if test="mfrsPictureId != null "> and mfrs_picture_id = #{mfrsPictureId}</if>
+             <if test="mfrsId != null "> and mfrs_id = #{mfrsId}</if>
+             <if test="mfrsPrestoreId != null "> and mfrs_prestore_id = #{mfrsPrestoreId}</if>
+             <if test="picId != null "> and pic_id = #{picId}</if>
+             <if test="state != null "> and state = #{state}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectMfrsPictureById" parameterType="Integer" resultMap="MfrsPictureResult">
+        <include refid="selectMfrsPictureVo"/>
+        where mfrs_picture_id = #{mfrsPictureId}
+    </select>
+        
+    <insert id="insertMfrsPicture" parameterType="MfrsPicture">
+        insert into dis_mfrs_picture
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mfrsPictureId != null  ">mfrs_picture_id,</if>
+			<if test="mfrsId != null  ">mfrs_id,</if>
+			<if test="mfrsPrestoreId != null  ">mfrs_prestore_id,</if>
+			<if test="picId != null  ">pic_id,</if>
+			<if test="state != null  ">state,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mfrsPictureId != null  ">#{mfrsPictureId},</if>
+			<if test="mfrsId != null  ">#{mfrsId},</if>
+			<if test="mfrsPrestoreId != null  ">#{mfrsPrestoreId},</if>
+			<if test="picId != null  ">#{picId},</if>
+			<if test="state != null  ">#{state},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMfrsPicture" parameterType="MfrsPicture">
+        update dis_mfrs_picture
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mfrsId != null  ">mfrs_id = #{mfrsId},</if>
+            <if test="mfrsPrestoreId != null  ">mfrs_prestore_id = #{mfrsPrestoreId},</if>
+            <if test="picId != null  ">pic_id = #{picId},</if>
+            <if test="state != null  ">state = #{state},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where mfrs_picture_id = #{mfrsPictureId}
+    </update>
+
+	<delete id="deleteMfrsPictureById" parameterType="Integer">
+        delete from dis_mfrs_picture where mfrs_picture_id = #{mfrsPictureId}
+    </delete>
+	
+    <delete id="deleteMfrsPictureByIds" parameterType="String">
+        delete from dis_mfrs_picture where mfrs_picture_id in 
+        <foreach item="mfrsPictureId" collection="array" open="(" separator="," close=")">
+            #{mfrsPictureId}
+        </foreach>
+    </delete>
+    
+</mapper>

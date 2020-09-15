@@ -1,0 +1,91 @@
+.register-page {
+  /*修改提示文字的颜色*/
+  input::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: #aab2bd;
+    /* placeholder字体大小  */
+    font-size: 14px;
+  }
+
+  input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #aab2bd;
+    /* placeholder字体大小  */
+    font-size: 14px;
+  }
+
+  input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #aab2bd;
+    /* placeholder字体大小  */
+    font-size: 14px;
+
+  }
+
+  input:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: #aab2bd;
+    /* placeholder字体大小  */
+    font-size: 14px;
+
+  }
+
+
+
+  .main {
+    width: 1060px;
+    height: 650px;
+    border-radius: 2px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #ffffff;
+    box-shadow: 4px 5px 19px 1px
+    rgba(0, 0, 0, 0.18);
+    .formBox {
+      width: 350px;
+      margin: 0 auto;
+
+      .form-control:focus {
+        box-shadow: none;
+      }
+
+      .form-group {
+
+        // font-size: 14px;
+        input {
+          border-radius: 0;
+
+          &:hover {
+            border-color: #636a74;
+          }
+        }
+      }
+    }
+
+
+    .title-box{
+      margin-top: 60px;
+      margin-bottom: 40px;
+      text-align: center;
+      .title{
+        font-size: 24px;
+        font-weight: normal;
+        margin: 0 auto;
+      }
+      .tologin{
+        position: absolute;
+        right: 60px;
+        float: right;
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+  }
+
+
+
+}

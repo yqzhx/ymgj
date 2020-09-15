@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>总台管理系统</title>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/adminTpl/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/adminTpl/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/adminTpl/css/font-icon-style.css}">
+    <link rel="stylesheet" th:href="@{/adminTpl/css/style.default.css}" id="theme-stylesheet">
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" th:href="@{/adminTpl/css/ui-elements/card.css}">
+    <link rel="stylesheet" th:href="@{/adminTpl/css/style.css}">
+
+    <style>
+        .card .img {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+        }
+        .card{
+            margin-top: 0;
+        }
+        .row{
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+        th{
+            width: auto;
+        }
+        .td1{
+            width: auto;
+            text-align: right;
+        }
+        td{
+            width: auto;
+            height: auto;
+        }
+        tr{
+            height: auto;
+        }
+        .controller{
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+
+<body class="gray-bg">
+<div class="content-inner">
+    <!--***** REPORT-1 *****-->
+    <div class="row" id="report1">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-block" style="height: 80px">
+                    <div class="text-left report1-cont">
+                        <span class="text-muted">今日新增订单数</span>
+                        <h2 class="font-light m-b-0" id="today"
+                            style="padding-left: 40px;padding-top: 5px"><i class="ti-arrow-up text-success"></i></h2>
+
+                    </div>
+                    <div class="form-group"></div>
+                    <img src="/img/main/today.png" alt="" class="img">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-block" style="height: 80px">
+                    <div class="text-left report1-cont">
+                        <span class="text-muted">历史订单数</span>
+                        <h2 class="font-light m-b-0" id="history"
+                            style="padding-left: 40px;padding-top: 5px"><i class="ti-arrow-up text-danger"></i></h2>
+                    </div>
+                    <div class="form-group"></div>
+                    <img src="/img/main/history.png" alt="" class="img">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-block" style="height: 80px">
+                    <div class="text-left report1-cont" >
+                        <span class="text-muted">待发货订单数</span>
+                        <h2 class="font-light m-b-0" id="daifahuo"
+                            style="padding-left: 40px;padding-top: 5px"><i class="ti-arrow-up text-warning"></i></h2>
+                    </div>
+                    <div class="form-group"></div>
+                    <img src="/img/main/dai.png" alt="" class="img">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-block" style="height: 80px">
+                    <div class="text-left report1-cont">
+                        <span class="text-muted">待回款订单数</span>
+                        <h2 class="font-light m-b-0" id="weihuikuan"
+                            style="padding-left: 40px;padding-top: 5px"><i class="ti-arrow-up text-info"></i></h2>
+                    </div>
+                    <div class="form-group"></div>
+                    <img src="/img/main/wei.png" alt="" class="img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--***** REPORT-2 *****-->
+    <div class="row" id="report2">
+        <div class="col-8">
+            <div class="card card-c1">
+                <div class="form-group"></div>
+<!--                <h6 style="text-align: center">订单总数</h6>-->
+<!--                <canvas class="ct-chart" id="myChart2" style="height:400px;width: 100%;"></canvas>-->
+                <div id="myChart2" style="height:320px;width: 100%;" ></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card card-c1">
+                <div class="form-group"></div>
+                <div class="echarts-title" style="text-align: center;">
+<!--                    <h5>用户数量</h5></div>-->
+                <div id="myChart1" style="height:320px;width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--***** REPORT-3 *****-->
+    <div class="row" id="report3">
+        <div class="col-md-6">
+            <div class="card card-c2 controller" style="height: 90%">
+                <table class="table table-hover">
+                    <thead>
+
+                    <tr>
+                        <th>排名</th>
+                        <th>合作企业</th>
+                        <th class="td1">订单数</th>
+                        <th class="td1">总金额</th>
+                    </tr>
+                    </thead>
+                    <tbody id="mfrstable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-c2 controller" style="height: 90%">
+                <table class="table table-hover" >
+                    <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>推广企业</th>
+                        <th class="td1">订单数</th>
+                        <th class="td1">总金额</th>
+                    </tr>
+                    </thead>
+                    <tbody id="companytable">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<!--        <div class="row">-->
+<!--            <div class="col-md-6">-->
+<!--                <div class="card card-c2 controller" style="height: 90%">-->
+<!--                    <table class="table table-hover" >-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th>排名</th>-->
+<!--                            <th>医疗机构</th>-->
+<!--                            <th class="td1">订单数</th>-->
+<!--                            <th class="td1">总金额</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody id="cdctable">-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+</div>
+
+
+<!--</div>-->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!--</script>-->
+<!--Global Javascript -->
+<!--<script th:src="@{/adminTpl/js/jquery.min.js}"></script>-->
+<script th:src="@{/adminTpl/js/popper/popper.min.js}"></script>
+<script th:src="@{/adminTpl/js/tether.min.js}"></script>
+<!--<script th:src="@{/adminTpl/js/bootstrap.min.js}"></script>-->
+<script th:src="@{/adminTpl/js/jquery.cookie.js}"></script>
+<script th:src="@{/adminTpl/js/jquery.validate.min.js}"></script>
+<script th:src="@{/adminTpl/js/chart.min.js}"></script>
+<script th:src="@{/adminTpl/js/front.js}"></script>
+
+<!--Core Javascript -->
+<!--<script th:src="@{/adminTpl/js/mychart.js}"></script>-->
+<script th:src="@{/ajax/libs/echarts/echarts.min.js}"></script>
+<!--<script th:src="@{/ajax/libs/echarts/echarts-gl.min.js}"></script>-->
+
+<script th:inline="none" type="text/javascript">
+    $.fn.extend({
+        initCharts: function (options) {
+            var el = this;
+            var myChart = echarts.init($(el)[0]);
+
+            myChart.setOption(options);
+        }
+    })
+
+    $(function () {
+        var todayContract;
+        var historyContract;
+        var weihuikuanContract;
+        var daifahuoContract;
+        /**
+         * 四个小块
+         */
+        $.ajax({
+            dataType: 'json',
+            type: 'get',
+            url: "/main/contract",
+            success: function (data) {
+                // console.log(data);
+                $('#today').html(data.todayContract);
+                $('#history').html(data.historyContract);
+                $('#daifahuo').html(data.daiFaHuo);
+                $('#weihuikuan').html(data.weiHuiKuan);
+
+            }
+        })
+
+
+        /**
+         * 订单数量总计
+         */
+        $.ajax({
+            dataType: 'json',
+            type: 'get',
+            url: "/main/count",
+            success: function (data) {
+                //
+               var option = {
+                    title: {
+                        text: '本年度订单总量',
+                        left:'40%'
+                    },
+                   color:['#f2ae43'],
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['订单总量']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '10%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'本月订单总量',
+                            type:'line',
+                            stack: '订单总量',
+                            data:data
+                            // data:[125,547,321,145,222,1476,475,645,900,558,458,666]
+                        }
+                    ]
+                };
+                $('#myChart2').initCharts(option);
+            }
+
+        })
+
+        /**
+         * 四个端用户数量
+         */
+        $.ajax({
+            dataType: 'json',
+            type: 'get',
+            url: "/main/account",
+            success: function (data) {
+                option1 = {
+
+
+                    color: ['#ed654b','#f2ae43','#418bca','#1ab394'],
+                    title: {
+                        text: '用户数量',
+                        left:'40%'
+                    },
+                    tooltip : {
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        },
+
+                    },
+                    legend: {
+                        data:['门诊端','疾控端','合作企业端','推广企业端'],
+                        bottom:'5%'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '20%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type : 'category',
+                        splitLine: {show:false},
+                        data :  [ "门诊","疾控中心", "合作企业", "推广企业"]
+
+                    },
+                    yAxis: {
+                        type : 'value'
+                    },
+                    series: [
+                        {
+                            name: '门诊端',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            barWidth: '40%',
+                            data: [data[0],'-','-','-']
+                        },
+                        {
+                            name: '疾控端',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            barWidth: '40%',
+                            data: [ '-', data[1], '-', '-']
+                        },
+                        {
+                            name: '合作企业端',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            barWidth: '40%',
+                            data: [ '-', '-', data[2], '-']
+                        },
+                        {
+                            name: '推广企业端',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            barWidth: '40%',
+                            data: [ '-','-', '-', data[3]]
+                        }
+                    ]
+                };
+
+                $('#myChart1').initCharts(option1);
+            }
+        })
+
+        /**
+         * 三个端top10+
+         */
+
+        $.ajax({
+            dataType: 'json',
+            type: 'get',
+            url: "/main/selectContractCount",
+            success: function (data) {
+                // console.log(data)
+                var mfrs = data.mfrs;
+                var cdc = data.cdc;
+                var company = data.company;
+                var companys = '';
+                var mfrss = '';
+                var cdcs = '';
+                /**
+                 * 推广商
+                 */
+                for (var i = 0; i < company.length; i++) {
+                    // console.log(company[i].companyName);
+                    var j = i + 1;
+                    var contract;
+                    var total;
+                    if (company[i].countContract == null) {
+                        contract = 0;
+                    } else {
+                        contract = company[i].countContract;
+                    }
+                    if (company[i].totalAmount == null) {
+                        total = 0;
+                    } else {
+                        total = company[i].totalAmount;
+                    }
+                    companys += '<tr>' +
+                        '<td>top' + j + '</td>\n' +
+                        '<td>' + company[i].companyName + '</td>' +
+                        '<td class="td1">' + contract + '</td>' +
+                        '<td class="td1">' + total +'元'+ '</td>' +
+                        '</tr>'
+                }
+
+                /**
+                 * 生产商
+                 */
+                for (var i = 0; i < mfrs.length; i++) {
+                    // console.log(mfrs[i].companyName);
+                    var j = i + 1;
+                    var contract;
+                    var total;
+                    if (mfrs[i].countContract == null) {
+                        contract = 0;
+                    } else {
+                        contract = mfrs[i].countContract;
+                    }
+                    if (mfrs[i].totalAmount == null) {
+                        total = 0;
+                    } else {
+                        total = mfrs[i].totalAmount;
+                    }
+                    mfrss += '<tr>' +
+                        '<td>top' + j + '</td>\n' +
+                        '<td>' + mfrs[i].mfrsName + '</td>' +
+                        '<td class="td1">' + contract + '</td>' +
+                        '<td class="td1">' + total +'元'+ '</td>' +
+                        '</tr>'
+                }
+                /**
+                 * 疾控
+                 */
+                // for (var i = 0; i < cdc.length; i++) {
+                //     // console.log(cdc[i].cdcName);
+                //     var j = i + 1;
+                //     var contract;
+                //     var total;
+                //     if (cdc[i].countContract == null) {
+                //         contract = 0;
+                //     } else {
+                //         contract = cdc[i].countContract;
+                //     }
+                //     if (cdc[i].totalAmount == null) {
+                //         total = 0;
+                //     } else {
+                //         total = cdc[i].totalAmount;
+                //     }
+                //     cdcs += '<tr>' +
+                //         '<td>top' + j + '</td>\n' +
+                //         '<td>' + cdc[i].cdcName + '</td>' +
+                //         '<td class="td1">' + contract + '</td>' +
+                //         '<td class="td1">' + total +'元'+ '</td>' +
+                //         '</tr>'
+                // }
+                $('#companytable').append($(companys));
+                $('#mfrstable').append($(mfrss));
+                // $('#cdctable').append($(cdcs));
+
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="content-box-flex">
+<div class="col-sm-12 search-collapse">
+    <form id="formId">
+        <div class="select-list">
+            <ul>
+                <li>
+                    联系人：<input type="text" name="linkName"/>
+                </li>
+                <li>
+                    手机号：<input type="text" name="mobile"/>
+                </li>
+                <li>
+                    <a class="btn btn-primary  btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-warning  btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-table" data-mobile-responsive="true" class="text-nowrap" style="table-layout: auto;"></table>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "operate/mfrs";
+    let id = $.getUrlQuery("cid");
+    $(function () {
+        var options = {
+            url: prefix + "/linkList?mfrsId=" + id,
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "联系人",
+            search: false,
+            showRefresh: false,
+            showToggle: false,
+            showSearch: false,
+            showColumns: false,
+            showExport: false,
+            sortName:"updateTime",
+            sortOrder:"desc",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'mfrsLinkmanId',
+                    title: 'mfrsLinkmanId',
+                    visible: false
+                },
+                {
+                    field: 'linkName',
+                    title: '联系人'
+                },
+                /*{
+                    field: 'job',
+                    title: '职务'
+                },*/
+                {
+                    field: 'mobile',
+                    title: '联系电话'
+                },
+                {
+                    field: 'idCard',
+                    title: '身份证号'
+                },
+                {
+                    field: 'telephone',
+                    title: '座机号'
+                },
+                {
+                    field: 'mail',
+                    title: '邮箱'
+                },
+                {
+                    field: 'updateTime',
+                    title: '提交时间'
+                },
+            ]
+        };
+        if ($(".btn-edit").length == 0) {
+            options.columns.splice(0, 1);
+        }
+        $.table.init(options);
+    });
+
+    // 删除联系人
+    function remove() {
+        if (!atleastOneLinkman()) {
+            $.modal.alertWarning('请至少保留一个联系人！');
+            return false;
+        }
+        $.operate.removeAll()
+    }
+
+    // 至少保留一个联系人判断
+    function atleastOneLinkman() {
+        var trs = $('#bootstrap-table tbody tr');
+        var canDelete = true;
+        if (trs.length == 1) canDelete = false;
+        return canDelete;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+@import './_base.scss';
+@import './_select2.scss';
+@import './_apply.scss';
+@import './_bootstrap-fileinput.scss';
+@import './_webuploader.scss';
+@import './_login.scss';
+@import './_register.scss';
+@import './_bootstrapTable.scss';
+@import './_navTabs.scss';
+@import './_layout.scss';
+@import './_layui.scss';
+@import './_noticeDetail.scss';
+@import './_imgPreview.scss';
+@import './_layer.scss';
+@import './_control.scss';
+.error{
+  color: #ff4c4c;
+}
+
+
+
+
+
+
+.error {
+  color: #ff4c4c!important;
+  border-color:  #ff4c4c!important;
+}
+
+.must{
+  color: #c00;
+}
+
+
+/*超出隐藏*/
+.text-overflow{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/*文字两侧分布*/
+.text-justify{
+  text-align: justify!important;
+}
+.text-justify:after{
+  content:'';
+  width:100%;
+  display: inline-block;
+  overflow: hidden;
+  height: 0;
+}
+/*end*/
+
+/*validate*/
+.validate{
+  position: relative;
+}
+.error-icon{
+  height: 18px;
+  line-height: 18px;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #c00;
+  cursor: pointer;
+  z-index: 200;
+}
+.error-icon i{
+  font-size: 18px;
+}
+
+.error-icon+.popover .popover-title{
+  display: none;
+}
+.error-icon+.popover .popover-content{
+  width: 200px;
+}
+
+.error .select2-selection--single{
+  background-color: #fbe2e2;
+  color: #c00;
+  border-color: #c66161;
+}
+
+
+/*table表单*/
+.table-form{
+  padding: 10px;
+}
+.table-form .form-group{
+  margin-right: 15px;
+}
+.table-form .form-group .select2{
+  width: 300px!important;
+}
+
+
+
+/*table占满全屏*/
+//.flex-box,.bootstrap-table{
+//  height: 100%;
+//  display: flex;
+//  flex-direction: column;
+//}
+

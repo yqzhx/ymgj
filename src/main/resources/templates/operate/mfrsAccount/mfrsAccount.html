@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="content-box-flex">
+<div class="col-sm-12 search-collapse">
+    <form id="formId">
+        <div class="select-list">
+            <ul>
+                <li>账号名：<input type="text" name="loginName"/></li>
+                <li>
+                    合作企业：
+                    <select id="mfrsId" name="mfrsId"></select>
+                </li>
+                <li>
+                    <a class="btn btn-primary  btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-warning  btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-table" data-mobile-responsive="true" class="text-nowrap" style="table-layout: auto;"></table>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var data = [[${@dict.getType('sys_user_sex')}]];
+    var datas = [[${@dict.getType('sys_role_type')}]];
+    var accountPrefix = ctx + "operate/mfrsAccount";
+    $(function () {
+        var options = {
+            url: accountPrefix + "/list",
+            modalName: "账号",
+            search: false,
+            showRefresh: false,
+            showToggle: false,
+            showSearch: false,
+            showColumns: false,
+            showExport: false,
+            columns: [
+                {
+                    field: 'accountId',
+                    title: '编号',
+                    visible: false
+                },
+                {
+                    field: 'mfrs.name',
+                    title: '账号类型',
+                    formatter: function (value, row, index) {
+                        if (value == ''|| value == null) {
+                            return "游客";
+                        }
+                        else{
+                            return "普通会员"
+                        }
+                    }
+                },
+                {
+                    field: 'mfrs.name',
+                    title: '合作企业'
+                },
+                {
+                    field: 'loginName',
+                    title: '账号名'
+                },
+                {
+                    field: 'userName',
+                    title: '用户姓名'
+                },
+                {
+                    field: 'roleArr',
+                    title: '所属角色'
+                },
+                {
+                    field: 'email',
+                    title: '用户邮箱',
+                    formatter: function (value, row, index) {
+                        if (value == '') {
+                            return "-";
+                        }
+                    }
+                },
+                {
+                    field: 'phonenumber',
+                    title: '手机号'
+                },
+                {
+                    field: 'sex',
+                    title: '性别',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(data, value);
+                    }
+                },
+                {
+                    field: 'updateTime',
+                    title: '提交时间'
+                },
+                {
+                    field: 'delFlag',
+                    title: '用户状态',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if (value === '0') {
+                            return '<span class="text-success">在职</span>';
+                        } else {
+                            return '<span class="text-danger">已离职</span>';
+                        }
+                    }
+                },
+            ]
+        };
+        $.table.init(options);
+    });
+
+    //筛选级联
+    var select = $.initSelect({
+        config: {
+            el: "#mfrsId",
+            url: accountPrefix + "/list",
+            key: 'mfrs.name',
+            value: 'mfrs.mfrsId',
+            data: {
+                flag: 1
+            },
+            style: {
+                width: '300'
+            }
+        }
+    });
+
+    function submitHandler() {
+        $.modal.close();
+    }
+</script>
+</body>
+</html>

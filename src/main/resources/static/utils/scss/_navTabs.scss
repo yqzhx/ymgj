@@ -1,0 +1,58 @@
+.tabs2.nav-tabs {
+  border-bottom: none;
+  & > li {
+    margin-right: 4px;
+    & > a {
+      padding: 6px 12px;
+      height: 32px;
+      line-height: 20px;
+      font-size: 12px;
+      font-weight: normal;
+      background-color: #DCE2E7;
+      color: #444;
+      border-radius: 0;
+      width: 115px;
+      text-align: center;
+    }
+  }
+  & > li.active {
+    & > a {
+      border: none;
+      background-color: #546478;
+      color: #FFFFFF;
+      &:hover {
+        border: none;
+        background-color: #546478;
+        color: #FFFFFF;
+      }
+      &:focus {
+        border: none;
+        background-color: #546478;
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+
+.tabs1.nav-tabs {
+  & > li {
+    & > a {
+      padding: 10px 16px;
+      border-radius: 0;
+      font-size: 12px;
+      line-height: 1.428571429;
+      font-weight:normal;
+      margin-right: 0;
+      background: #FBFAF8;
+    }
+  }
+  & > li.active {
+    & > a {
+      border-top: 2px solid #00a2ca;
+      border-bottom: 1px solid #FFF;
+      color: #333;
+      background: #FFFFFF;
+    }
+  }
+
+}

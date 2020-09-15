@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-mfrs-edit">
+    	<input id="mfrsPrestoreId" name="mfrsPrestoreId" class="form-control" type="hidden" >
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="provinceId">所属地区：</label>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <select name="provinceId" id="provinceId"></select>
+                    </div>
+                    <div class="col-sm-6">
+                        <select name="cityId" id="cityId"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="row">
+                    <label class="col-sm-2 control-label">合作企业名称：</label>
+                    <div class="col-sm-8">
+                        <select name="mfrsId" id="mfrsId"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+	var mfrsPrestoreId = $.getUrlQuery('mfrsPrestoreId');
+    //表单验证
+    var prefix = ctx + "operate/mfrs";
+   
+    $.initSelect({
+        config: {
+            el: '#provinceId',
+            url: '/system/area/list',
+            value: 'areaId',
+            key: 'name',
+            data: {
+                level: 1
+            },
+            onChange: function () {
+            },
+            placeholder: '请选择省份',
+            children: {
+                el: '#cityId',
+                value: 'areaId',
+                key: 'name',
+                url: '/system/area/list',
+                param: 'pid',
+                onChange: function () {
+                },
+                placeholder: '请选择城市',
+                children: {
+                     el: '#mfrsId',
+                     value: 'mfrsId',
+                     key: 'name',
+                     url: '/operate/mfrs/list/notPass',
+                     param: 'cityId',
+                     onChange: function () {
+                     },
+                     placeholder: '请选择名称'
+                }
+            }
+        }
+    });
+
+    //提交
+    function submitHandler() {
+    	$("#mfrsPrestoreId").val(mfrsPrestoreId);
+        if ($.validate.form()) {
+            $.operate.save(ctx + "operate/mfrsPrestore/applyMfrsPrestore", $('#form-mfrs-edit').serialize());
+        }
+    }
+</script>
+</body>
+</html>

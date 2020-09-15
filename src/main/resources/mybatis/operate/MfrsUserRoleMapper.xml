@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.operate.mfrs.mapper.MfrsUserRoleMapper">
+    
+    <delete id="deleteUserRoleByAccountId" parameterType="Long">
+		delete from mfrs_user_role where account_id=#{accountId}
+	</delete>
+	
+	<insert id="batchUserRole" parameterType="Map">
+		insert into mfrs_user_role(account_id, role_id) values (#{accountId},#{roleId})
+	</insert>
+	
+	<select id="selectMfrsUserByMfrsId" parameterType="String" resultType="Long">
+		select account_id accountId from mfrs_account where mfrs_id = #{mfrsId} limit 1
+	</select>
+    
+</mapper>

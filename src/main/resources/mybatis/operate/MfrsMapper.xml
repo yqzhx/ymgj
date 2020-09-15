@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.operate.mfrs.mapper.MfrsMapper">
+
+    <resultMap type="Mfrs" id="MfrsResult">
+        <result property="mfrsId" column="mfrs_id"/>
+        <result property="name" column="name"/>
+        <result property="shortName" column="short_name"/>
+        <result property="grabbingName" column="grabbing_name"/>
+        <result property="description" column="description"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="areaArr" column="area_arr"/>
+        <result property="linkmanName" column="linkman_name"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="number" column="number"/>
+        <result property="isPass" column="is_pass"/>
+        <result property="confirmTime" column="confirm_time"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+    <sql id="selectMfrsVo">
+        select df.*,concat_ws('-',sa.name,sa1.name,sa2.name) as area_arr,ma.user_name,
+               (select count(*) from dis_mfrs_prestore dmp where dmp.mfrs_id=df.mfrs_id and dmp.del_flag = 0 and dmp.mfrs_id is not  null) as number
+        from dis_mfrs df
+         left join sys_area sa on df.province_id = sa.area_id
+         left join sys_area sa1 on df.city_id = sa1.area_id
+         left join sys_area sa2 on df.county_id = sa2.area_id
+         left join mfrs_account ma on ma.login_name=df.update_by and ma.del_flag = 0
+    </sql>
+
+    <select id="selectMfrsList" parameterType="Mfrs" resultMap="MfrsResult">
+        <include refid="selectMfrsVo"/>
+        <where>
+            <if test="mfrsId != null "> and df.mfrs_id =#{mfrsId}</if>
+            <if test="name != null  and name != ''"> and df.name like concat('%',#{name},'%')</if>
+            <if test="shortName != null  and shortName != '' "> and df.short_name like concat('%', #{shortName},'%')</if>
+            <if test="description != null  and description != '' "> and df.description =#{description}</if>
+            <if test="delFlag != null  and delFlag != '' "> and df.del_flag =#{delFlag}</if>
+            <if test="createBy != null  and createBy != '' "> and df.create_by =#{createBy}</if>
+            <if test="createTime != null "> and df.create_time =#{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' "> and df.update_by =#{updateBy}</if>
+            <if test="updateTime != null "> and df.update_time =#{updateTime}</if>
+            <if test="provinceId != null "> and df.province_id =#{provinceId}</if>
+            <if test="cityId != null "> and df.city_id =#{cityId}</if>
+            <if test="countyId != null "> and df.county_id =#{countyId}</if>
+            <if test="isPass != null and isPass !=''"> and df.is_pass =#{isPass}</if>
+            and df.del_flag = 0
+        </where>
+         order by df.is_pass,update_time desc
+    </select>
+
+    <select id="selectCountByMfrsName"  parameterType="Mfrs" resultMap="MfrsResult">
+        select * from dis_mfrs where name = #{name} and del_flag = 0
+    </select>
+
+    <select id="selectById"  parameterType="Mfrs" resultMap="MfrsResult">
+        select * from dis_mfrs where mfrs_id = #{mfrsId} and del_flag = 0
+    </select>
+
+    <select id="selectCountByMfrsShortName" parameterType="Mfrs" resultMap="MfrsResult">
+        select * from dis_mfrs where short_name = #{shortName} and del_flag = 0
+    </select>
+
+    <select id="selectMfrsById" parameterType="Integer" resultMap="MfrsResult">
+        <include refid="selectMfrsVo"/>
+        where df.mfrs_id = #{mfrsId}
+    </select>
+
+    <insert id="insertMfrs" parameterType="Mfrs" useGeneratedKeys="true" keyProperty="mfrsId">
+        insert into dis_mfrs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mfrsId != null  ">mfrs_id,</if>
+            <if test="name != null  and name != ''  ">name,</if>
+            <if test="shortName != null  and shortName != ''  ">short_name,</if>
+            <if test="grabbingName !=null and grabbingName !=''">grabbing_name,</if>
+            <if test="description != null  and description != ''  ">description,</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
+            <if test="createTime != null  ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+            <if test="updateTime != null  ">update_time,</if>
+            <if test="provinceId != null  ">province_id,</if>
+            <if test="cityId != null  ">city_id,</if>
+            <if test="linkmanName != null  and linkmanName != ''  ">linkman_name,</if>
+            <if test="phoneNumber != null  and phoneNumber != ''  ">phone_number,</if>
+            <if test="countyId != null  ">county_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mfrsId != null  ">#{mfrsId},</if>
+            <if test="name != null  and name != ''  ">#{name},</if>
+            <if test="shortName != null  and shortName != ''  ">#{shortName},</if>
+            <if test="grabbingName !=null and grabbingName !=''">#{grabbingName},</if>
+            <if test="description != null  and description != ''  ">#{description},</if>
+            <if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            <if test="createTime != null  ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+            <if test="updateTime != null  ">#{updateTime},</if>
+            <if test="provinceId != null  ">#{provinceId},</if>
+            <if test="cityId != null  ">#{cityId},</if>
+            <if test="linkmanName != null  and linkmanName != ''  ">#{linkmanName},</if>
+            <if test="phoneNumber != null  and phoneNumber != ''  ">#{phoneNumber},</if>
+            <if test="countyId != null  ">#{countyId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMfrs" parameterType="Mfrs">
+        update dis_mfrs
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null    ">name =#{name},</if>
+            <if test="shortName != null   ">short_name =#{shortName},</if>
+            <if test="grabbingName !=null and shortName !=''">grabbing_name=#{grabbingName},</if>
+            <if test="description != null  ">description =#{description},</if>
+            <if test="delFlag != null  ">del_flag =#{delFlag},</if>
+            <if test="updateBy != null    ">update_by =#{updateBy},</if>
+            <if test="updateTime != null  ">update_time =#{updateTime},</if>
+            <if test="provinceId != null  ">province_id =#{provinceId},</if>
+            <if test="cityId != null  ">city_id =#{cityId},</if>
+            <if test="linkmanName != null  ">linkman_name =#{linkmanName},</if>
+            <if test="phoneNumber != null  ">phone_number =#{phoneNumber},</if>
+            <if test="countyId != null  ">county_id =#{countyId},</if>
+            <if test="isPass != null  ">is_pass =#{isPass},</if>
+            <if test="confirmTime !=null">confirm_time=#{confirmTime}</if>
+        </trim>
+        where mfrs_id = #{mfrsId}
+    </update>
+
+    <delete id="deleteMfrsById" parameterType="Integer">
+        delete from dis_mfrs where mfrs_id = #{mfrsId}
+    </delete>
+
+    <delete id="deleteMfrsByIds" parameterType="String">
+        update dis_mfrs set del_flag = 1 where mfrs_id in
+        <foreach item="mfrsId" collection="array" open="(" separator="," close=")">
+            #{mfrsId}
+        </foreach>
+    </delete>
+    
+    <select id="selectMfrsListByCompanyId" parameterType="Integer" resultMap="MfrsResult">
+        select DISTINCT(m.mfrs_id),m.name FROM
+        dis_mfrs m
+        LEFT JOIN dis_accredit_sku s ON m.mfrs_id = s.mfrs_id
+        LEFT JOIN dis_accredit_cdc c ON s.accredit_cdc_id = c.accredit_cdc_id
+        WHERE
+        company_id = #{companyId}
+        and m.del_flag = 0 and s.del_flag = 0 and c.del_flag = 0
+    </select>
+
+    <select id="selectMfrsListNotPass"  parameterType="Mfrs" resultMap="MfrsResult">
+        <include refid="selectMfrsVo"/>
+        <where>
+            <if test="mfrsId != null "> and df.mfrs_id =#{mfrsId}</if>
+            <if test="name != null  and name != '' "> and df.name like concat('%',#{name},'%')</if>
+            <if test="shortName != null  and shortName != '' "> and df.short_name like concat('%', #{shortName},'%')</if>
+            <if test="description != null  and description != '' "> and df.description =#{description}</if>
+            <if test="delFlag != null  and delFlag != '' "> and df.del_flag =#{delFlag}</if>
+            <if test="createBy != null  and createBy != '' "> and df.create_by =#{createBy}</if>
+            <if test="createTime != null "> and df.create_time =#{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' "> and df.update_by =#{updateBy}</if>
+            <if test="updateTime != null "> and df.update_time =#{updateTime}</if>
+            <if test="provinceId != null "> and df.province_id =#{provinceId}</if>
+            <if test="cityId != null "> and df.city_id =#{cityId}</if>
+            <if test="countyId != null "> and df.county_id =#{countyId}</if>
+            and df.del_flag = 0
+        </where>
+    </select>
+
+</mapper>

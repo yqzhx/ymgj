@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="content-box-flex">
+<div class="col-sm-12 search-collapse">
+    <form id="formId" class="form-horizontal">
+        <div class="select-list">
+            <ul>
+                <li>
+                    所属地区：
+                    <select id="provinceId" name="provinceId"></select>
+                    <select id="cityId" name="cityId"></select>
+                    <select id="countyId" name="countyId"></select>
+                </li>
+                <li>合作企业：<input type="text" name="name" id="name"/></li>
+                <li style="line-height: 34px ">开通状态：</li>
+                <li style="width: 100px;margin-left: -10px;">
+                    <select name="isPass" class="isSelect2" th:with="type=${@dict.getType('sys_pass_status')}" style="width: auto" data-placeholder="--请选择--">
+                        <option value="">全部</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </li>
+                <li>
+                    <a class="btn btn-primary  btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-warning  btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+    <a class="btn btn-success" onclick="$.operate.add(null)"
+       shiro:hasPermission="operate:mfrs:add">
+        <i class="fa fa-plus"></i> 添加
+    </a>
+    <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit(null)"
+       shiro:hasPermission="operate:mfrs:edit">
+        修改
+    </a>
+    <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
+       shiro:hasPermission="operate:mfrs:remove">
+        <i class="fa fa-remove"></i> 删除</a>
+    <!-- <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="operate:mfrs:export">
+        <i class="fa fa-download"></i> 导出
+    </a> -->
+</div>
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-table" data-mobile-responsive="true" class="text-nowrap" style="table-layout: auto;"></table>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('operate:mfrs:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('operate:mfrs:remove')}]];
+    var datas = [[${@dict.getType('sys_show_hide')}]];
+    var prefix = ctx + "operate/mfrs";
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "合作企业",
+            search: false,
+            showRefresh: false,
+            showToggle: false,
+            showSearch: false,
+            showColumns: false,
+            showExport: false,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'mfrsId',
+                    title: '编号',
+                    visible: false
+                },
+                {
+                    field: 'name',
+                    title: '合作企业全称'
+                },
+                {
+                    field: 'shortName',
+                    title: '合作企业简称'
+                },
+                {
+                    field: 'grabbingName',
+                    title: '企业抓取名称',
+                    formatter: function (value, row, index) {
+                        if (value == '' || value == null) {
+                            return "-";
+                        } else {
+                            return value;
+                        }
+                    },
+                },
+                {
+                    field: 'areaArr',
+                    title: '所属地区'
+                },
+                {
+                    field: 'userName',
+                    title: '提交人'
+                },
+                {
+                    field:'updateTime',
+                    title:'提交时间',
+                },
+                {
+                    field: 'confirmTime',
+                    title: '审核通过时间'
+                },
+                {
+                    field: 'isPass',
+                    title: '开通状态',
+                    formatter: function (value, row, index) {
+                        if (value == 1) {
+                            return '<span class="text-danger">未开通</span>';
+                        } else {
+                            return '<span class="text-success">已开通</span>';
+                        }
+                    }
+                },
+                {
+                    field: 'isPass',
+                    title: '操作',
+                    formatter: function (value, row, index) {
+                        let actions = [];
+                        if (value != 1) {
+                            actions.push ('<a class="link" href="#" onclick="openAccredit(' + row.mfrsId + ')">公开资质</a> &nbsp;&nbsp;|&nbsp;&nbsp;');
+                            actions.push ('<a class="link" href="#" onclick="openAccount(' + row.mfrsId + ')">联系人查看</a>');
+                        } else {
+                            actions.push ('<a class="link" href="#" onclick="openAccount(' + row.mfrsId + ')">联系人查看</a>');
+                        }
+                        return actions.join('');
+                    }
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+
+    // 省市区级联
+    var select = $.initSelect({
+        config: {
+            el: '#provinceId',
+            url: '/system/area/list',
+            value: 'areaId',
+            key: 'name',
+            placeholder: '请选择省份',
+            style: {
+                width: '180px'
+            },
+            data: {
+                level: 1
+            },
+            children: {
+                el: '#cityId',
+                value: 'areaId',
+                key: 'name',
+                url: '/system/area/list',
+                param: 'pid',
+                placeholder: '请选择城市',
+                style: {
+                    width: '180px'
+                },
+                children: {
+                    el: '#countyId',
+                    value: 'areaId',
+                    key: 'name',
+                    url: '/system/area/list',
+                    param: 'pid',
+                    placeholder: '请选择区县',
+                    style: {
+                        width: '180px'
+                    }
+                }
+            }
+        }
+    });
+
+    function openAccount(cid) {
+        $.modal.open("联系人", prefix + '/link?cid=' + cid, 1000, null, 1);
+    }
+
+    function openAccredit(mfrsId) {
+        createIframe(prefix + '/mfrsAccreditPic/' + mfrsId, "公开资质", 'mfrszz')
+    }
+
+    // 重置级联条件
+    function reset() {
+        select.reset();
+        $('#name').val("");
+    }
+
+    function mfrsPrestorePic(mfrsId, type) {
+        var url = prefix + "/selectMfrsPic?mfrsId=" + mfrsId + "&type=" + type;
+        $.modal.open('资质图片', url, null, null, 1);
+    }
+</script>
+</body>
+</html>

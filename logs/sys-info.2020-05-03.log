@@ -1,0 +1,266 @@
+08:50:05.204 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 5532 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+08:50:05.226 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+08:50:10.229 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+08:50:10.241 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+08:50:10.242 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+08:50:10.246 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+08:50:10.428 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+08:50:13.576 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+08:50:14.451 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+08:50:14.451 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+08:50:16.071 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+08:50:16.087 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+08:50:16.354 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+08:50:16.481 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+08:50:16.481 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+08:50:16.497 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 11.604 seconds (JVM running for 13.26)
+08:58:17.895 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+08:58:17.940 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+08:58:18.157 [http-nio-8080-exec-1] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+09:00:05.725 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 9380 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+09:00:05.730 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+09:00:10.822 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+09:00:10.849 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+09:00:10.849 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+09:00:10.855 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+09:00:11.055 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+09:00:24.272 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+09:00:25.427 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+09:00:25.428 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+09:00:27.094 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+09:00:27.116 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+09:00:27.313 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+09:00:27.420 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+09:00:27.421 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+09:00:27.448 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 22.068 seconds (JVM running for 24.54)
+09:00:59.285 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+09:00:59.331 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+09:00:59.523 [http-nio-8080-exec-1] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+09:08:05.334 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 5560 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+09:08:05.338 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+09:08:10.790 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+09:08:10.806 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+09:08:10.806 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+09:08:10.813 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+09:08:11.004 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+09:08:14.290 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+09:08:15.657 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+09:08:15.661 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+09:08:17.458 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+09:08:17.478 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+09:08:17.684 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+09:08:17.808 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+09:08:17.810 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+09:08:17.843 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 12.917 seconds (JVM running for 16.286)
+09:09:48.529 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+09:09:48.578 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+09:39:48.580 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+09:39:48.712 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  [1] sessions were stopped.
+10:05:22.785 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 600 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:05:22.790 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:05:30.268 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:05:30.282 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:05:30.282 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:05:30.287 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:05:30.443 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:05:34.433 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:05:35.778 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:05:35.781 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:05:37.881 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+10:05:37.906 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+10:05:38.202 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+10:05:38.387 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+10:05:38.389 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+10:05:38.426 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 16.122 seconds (JVM running for 17.459)
+10:05:59.009 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+10:05:59.056 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+10:08:13.629 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 6104 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:08:13.633 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:08:18.891 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:08:18.904 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:08:18.904 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:08:18.910 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:08:19.074 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:08:22.463 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:08:23.659 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:08:23.661 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:08:25.497 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+10:08:25.518 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+10:08:25.726 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+10:08:25.851 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+10:08:25.853 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+10:08:25.877 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 12.81 seconds (JVM running for 14.297)
+10:08:41.541 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+10:08:41.608 [http-nio-8080-exec-2] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+10:08:41.807 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Error][验证码错误]
+10:08:41.879 [pool-3-thread-1] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+10:08:48.366 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Error][验证码错误]
+10:08:52.419 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+10:10:54.977 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 5500 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:10:54.982 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:11:00.244 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:11:00.257 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:11:00.258 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:11:00.263 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:11:00.393 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:11:03.537 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:11:04.729 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:11:04.731 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:11:06.467 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+10:11:06.487 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+10:11:06.685 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+10:11:06.825 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+10:11:06.826 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+10:11:06.852 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 12.329 seconds (JVM running for 14.156)
+10:11:14.235 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+10:11:14.280 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+10:15:13.094 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 6540 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:15:13.101 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:15:18.030 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:15:18.043 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:15:18.043 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:15:18.049 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:15:18.188 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:15:21.292 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:15:22.512 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:15:22.514 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:15:24.253 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+10:15:24.272 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+10:15:24.486 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+10:15:24.623 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+10:15:24.624 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+10:15:24.652 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 12.084 seconds (JVM running for 13.599)
+10:15:30.083 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+10:15:30.133 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+10:16:27.635 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 12192 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:16:27.641 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:16:32.952 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:16:32.969 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:16:32.969 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:16:32.992 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:16:33.139 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:16:36.639 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:16:38.028 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:16:38.030 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:16:39.754 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+10:16:39.775 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+10:16:39.985 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+10:16:40.118 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+10:16:40.119 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+10:16:40.144 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 13.047 seconds (JVM running for 14.612)
+10:16:55.133 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+10:16:55.181 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+10:17:11.621 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Error][验证码错误]
+10:17:11.707 [pool-3-thread-1] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+10:17:15.260 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+10:17:22.431 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+10:17:26.645 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+10:19:10.709 [pool-3-thread-3] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Error][验证码错误]
+10:19:14.575 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+10:19:28.382 [pool-3-thread-4] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+10:23:00.194 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 12032 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:23:00.199 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:23:05.067 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:23:05.079 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:23:05.079 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:23:05.085 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:23:05.228 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:23:08.341 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:23:09.510 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:23:09.512 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:23:11.295 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+10:23:11.312 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+10:23:11.510 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+10:23:11.632 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+10:23:11.633 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+10:23:11.659 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 11.892 seconds (JVM running for 13.32)
+10:24:22.522 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 6020 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:24:22.528 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:24:27.820 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:24:27.835 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:24:27.835 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:24:27.841 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:24:27.977 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:24:31.268 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:24:32.489 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:24:32.491 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:24:36.059 [main] INFO  c.u.UUSTOPApplication - [logStarting,50] - Starting UUSTOPApplication on SD-20200427RWHO with PID 8240 (D:\bbbb\ymgj\target\classes started by Administrator in D:\bbbb\ymgj)
+10:24:36.065 [main] INFO  c.u.UUSTOPApplication - [logStartupProfileInfo,684] - The following profiles are active: test
+10:24:41.278 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Initializing ProtocolHandler ["http-nio-8080"]
+10:24:41.302 [main] INFO  o.a.c.c.StandardService - [log,180] - Starting service [Tomcat]
+10:24:41.303 [main] INFO  o.a.c.c.StandardEngine - [log,180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+10:24:41.309 [localhost-startStop-1] INFO  o.a.c.c.AprLifecycleListener - [log,180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Program Files (x86)\jdk1.8\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;.]
+10:24:41.481 [localhost-startStop-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring embedded WebApplicationContext
+10:24:44.639 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - [initHandlerMethods,69] - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+10:24:45.832 [main] INFO  i.l.c.EpollProvider - [info,101] - Starting without optional epoll library
+10:24:45.834 [main] INFO  i.l.c.KqueueProvider - [info,101] - Starting without optional kqueue library
+10:24:47.583 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,147] - Context refreshed
+10:24:47.602 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - [start,150] - Found 1 custom documentation plugin(s)
+10:24:47.809 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - [scan,41] - Scanning for api listing references
+10:24:47.949 [main] INFO  o.a.c.h.Http11NioProtocol - [log,180] - Starting ProtocolHandler ["http-nio-8080"]
+10:24:47.951 [main] INFO  o.a.t.u.n.NioSelectorPool - [log,180] - Using a shared selector for servlet write/read
+10:24:47.978 [main] INFO  c.u.UUSTOPApplication - [logStarted,59] - Started UUSTOPApplication in 12.382 seconds (JVM running for 13.789)
+10:24:48.109 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+10:24:48.155 [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [enableSessionValidation,233] - Enabling session validation scheduler...
+10:24:55.792 [http-nio-8080-exec-7] INFO  c.a.d.p.DruidDataSource - [init,930] - {dataSource-1} inited
+10:24:56.081 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+10:24:57.900 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+10:25:03.371 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+10:54:55.045 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+10:54:55.169 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+11:17:20.098 [pool-3-thread-5] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:23.679 [pool-3-thread-3] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:24.398 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:24.590 [pool-3-thread-4] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:24.766 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:24.939 [pool-3-thread-5] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:25.092 [pool-3-thread-3] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:29.047 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:29.765 [pool-3-thread-4] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:32.456 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:56.305 [pool-3-thread-5] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:57.097 [pool-3-thread-3] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:57.351 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:17:57.492 [pool-3-thread-4] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:18:04.105 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:18:24.561 [pool-3-thread-5] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+11:20:05.002 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+11:20:12.174 [pool-3-thread-5] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+11:24:55.044 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+11:24:55.086 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+11:54:55.044 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+11:54:55.066 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+12:24:55.044 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+12:24:55.090 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  [1] sessions were stopped.
+12:54:55.044 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+12:54:55.060 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+13:04:31.037 [pool-3-thread-3] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+13:24:55.043 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+13:24:55.272 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+13:54:55.043 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+13:54:55.086 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  [1] sessions were stopped.
+14:26:07.592 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+14:26:07.618 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+14:54:54.860 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+14:54:54.880 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+16:56:04.710 [lettuce-eventExecutorLoop-1-3] INFO  i.l.c.p.ConnectionWatchdog - [info,106] - Reconnecting, last destination was /61.181.76.60:6379
+16:56:04.720 [lettuce-nioEventLoop-4-3] INFO  i.l.c.p.ReconnectionHandler - [info,106] - Reconnected to 61.181.76.60:6379
+16:56:19.913 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+17:15:15.195 [pool-3-thread-4] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+17:15:19.821 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+17:17:06.694 [pool-3-thread-3] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+17:17:12.068 [pool-3-thread-2] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]
+17:23:59.448 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+17:23:59.472 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+17:23:59.472 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+17:23:59.486 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+17:23:59.486 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+17:23:59.498 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+17:23:59.498 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+17:23:59.508 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+17:24:54.855 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+17:24:55.108 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+17:54:54.856 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+17:54:54.879 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.
+18:24:54.854 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,275] - Validating all active sessions...
+18:24:54.895 [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - [validateSessions,308] - Finished session validation.  No sessions were stopped.

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="content-box-flex">
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-table" data-mobile-responsive="true" class="text-nowrap" style="table-layout: auto;"></table>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "system/noticeRecord/";
+    var userData = [[${@userNameUtil.getUserList()}]];
+    var noticeId = [[${noticeId}]];
+    var entType = [[${@dict.getType('sys_enterprise_type')}]];
+    var isRead = [[${@dict.getType('sys_read_status')}]];
+    $(function () {
+        var options = {
+            url: prefix + "/list?noticeId=" + noticeId,
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "消息详情",
+            search: false,
+            showRefresh: false,
+            showToggle: false,
+            showSearch: false,
+            showColumns: false,
+            showExport: false,
+            columns: [
+                {
+                    field: 'noticeId',
+                    title: '消息ID',
+                    visible: false
+                },
+                {
+                    field: 'enterpriseType',
+                    title: '单位类型',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(entType, value);
+                    }
+                },
+                {
+                    field: 'enterpriseName',
+                    title: '单位名称',
+                    formatter: function (value, row, index) {
+                        if (value == null || value == '') {
+                            return "暂无主体名称";
+                        } else {
+                            return value;
+                        }
+                    }
+                },
+               {
+                    field: 'userName',
+                    title: '接收人'
+
+                },
+                {
+                    field: 'phonenumber',
+                    title: '接收人手机号'
+                },
+                {
+                    field: 'readStatus',
+                    title: '是否已读',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(isRead, value);
+                    }
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+
+    function submitHandler() {
+        $.modal.close();
+    }
+</script>
+</body>
+</html>

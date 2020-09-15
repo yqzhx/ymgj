@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="content-box-flex">
+<div class="col-sm-12 search-collapse">
+    <form id="formId">
+        <div class="select-list">
+            <ul>
+                <li>合作企业：<input type="text" name="name" id="name"/></li>
+                <li>联系人：<input type="text" name="linkmanName" id="linkmanName"/></li>
+                <li>联系人电话：<input type="text" name="phoneNumber" id="phoneNumber"/></li>
+                <li>状态：
+                    <select type="text" name="delFlag" id="delFlag">
+                        <option value="">所有</option>
+                        <option value="7">待开通</option>
+                        <option value="9">待审核</option>
+                        <option value="8">未开通</option>
+                    </select>
+                </li>
+                <li>
+                    <a class="btn btn-primary  btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-warning  btn-sm" onclick="reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div class="col-sm-12 select-table table-striped">
+    <table id="bootstrap-table" data-mobile-responsive="true" class="text-nowrap" style="table-layout: auto;"></table>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('operate:mfrsPrestore:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('operate:mfrsPrestore:remove')}]];
+    var datas = [[${@dict.getType('sys_show_hide')}]];
+    var data = [[${@userNameUtil.getUserList()}]];
+    var prefix = ctx + "operate/mfrsPrestore";
+    var prefix1 = ctx + "operate/mfrs";
+
+    $(function () {
+        var options = {
+            url: prefix + "/selectAuditMfrsPrestoreList",
+            updateUrl: prefix + "/edit/{id}",
+            modalName: "合作企业",
+            search: false,
+            showExport: false,
+            showSearch: false,
+            sortName: "updateTime",
+            sortOrder: "desc",
+            columns: [
+                {
+                    field: 'mfrsPrestoreId',
+                    title: '编号',
+                    visible: false
+                },
+                {
+                    field: 'name',
+                    title: '合作企业'
+                },
+                {
+                    field: 'userName',
+                    title: '联系人'
+                },
+                {
+                    field: 'phoneNumber',
+                    title: '联系人电话'
+                },
+                {
+                    title: '营业执照',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<a class="link" href="#" onclick="mfrsPrestorePic(' + row.mfrsId + ',' + row.mfrsPrestoreId + ',' + 6 + ')">点击查看</a> '
+                    }
+                },
+                {
+                    title: '药品生产许可证',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<a class="link" href="#" onclick="mfrsPrestorePic(' + row.mfrsId + ',' + row.mfrsPrestoreId + ',' + 7 + ')">点击查看</a> '
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '申请时间',
+                    width: 200
+                },
+                {
+                    field: 'mfrsId',
+                    title: '状态',
+                    formatter: function (value, row, index) {
+                        if (value === null && row.delFlag == 9) {
+                            return '<span class="text-info">待开通</span>';
+                        } else if (value === undefined && row.delFlag == 9) {
+                            return '<span class="text-info">待开通</span>';
+                        } else if (value != null && row.delFlag == 9) {
+                            return '<span class="text-warning">待审核</span>';
+                        } else if (row.delFlag == 8) {
+                            return '<span class="text-danger">未开通</span>';
+                        }
+                    }
+                },
+                {
+                    field: 'mfrsId',
+                    title: '操作',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        if (row.delFlag == 8) {
+                            actions.push('<a class="link" href="#" onclick="reject1(' + row.mfrsPrestoreId + ',' + row.mfrsId + ')">驳回信息</a>');
+                        } else {
+                            actions.push('<a class="link" href="#" onclick="bindingMfrs(' + row.mfrsPrestoreId + ',' + row.mfrsId + ')">通过</a> &nbsp;&nbsp;|&nbsp;&nbsp;');
+                            actions.push('<a class="link" href="#" onclick="reject(' + row.mfrsPrestoreId + ',' + row.mfrsId + ')">驳回</a>');
+                        }
+                        return actions.join('');
+                    }
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+
+    //通过和驳回
+    function bindingMfrs(mfrsPrestoreId, mfrsId) {
+        if (mfrsId > 0) {
+            $.modal.confirm("确认要通过选中的1条数据吗?", function () {
+                var url = prefix + '/review/again';
+                var data = {"ids": mfrsPrestoreId};
+                $.operate.submit(url, "post", "json", data);
+            });
+        } else {
+            var url = prefix + '/bindingMfrs?mfrsPrestoreId=' + mfrsPrestoreId;
+            $.modal.open('绑定合作企业', url, null, 500);
+        }
+    }
+
+    //驳回
+    function reject(mfrsPrestoreId, mfrsId) {
+        $.modal.open("驳回", prefix + '/editBz/' + mfrsPrestoreId, 800, 350);
+    }
+
+    //驳回信息（去掉确认按钮）
+    function reject1(mfrsPrestoreId, mfrsId) {
+        $.modal.open("驳回", prefix + '/editBz/' + mfrsPrestoreId, 800, 350, 1);
+    }
+
+    //资质查看
+    function mfrsPrestorePic(mfrsId, mfrsPrestoreId, type) {
+        mfrsId = mfrsId == null ? -1 : mfrsId;
+        var url = prefix + "/selectReviewMap?mfrsId=" + mfrsId + "&type=" + type + "&mfrsPrestoreId=" + mfrsPrestoreId;
+        $.modal.open('资质图片', url,null,null,1);
+    }
+
+    //联系人
+    function openAccount(cid) {
+        cid = cid == null ? -1 : cid;
+        $.modal.open("联系人", prefix1 + '/link?cid=' + cid, 1000, null, 1);
+    }
+
+    // 重置级联条件
+    function reset() {
+        $('#name').val("");
+        $('#linkmanName').val("");
+        $('#phoneNumber').val("");
+        $("#delFlag").val(null).trigger("change");
+    }
+</script>
+</body>
+</html>

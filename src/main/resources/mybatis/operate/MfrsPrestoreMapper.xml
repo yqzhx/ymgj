@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.operate.mfrs.mapper.MfrsPrestoreMapper">
+
+    <resultMap type="MfrsPrestore" id="MfrsPrestoreResult">
+        <result property="mfrsPrestoreId" column="mfrs_prestore_id"/>
+        <result property="name" column="name"/>
+        <result property="shortName" column="short_name"/>
+        <result property="description" column="description"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="areaArr" column="area_arr"/>
+        <result property="linkmanName" column="linkman_name"/>
+        <result property="mfrsId" column="mfrs_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="confirmTime" column="confirm_time"/>
+        <result property="remark" column="remark"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+    <sql id="selectMfrsVo">
+        select df.mfrs_prestore_id,
+               df.mfrs_id,
+               df.name,
+               df.short_name,
+               df.description,
+               df.del_flag,
+               df.create_by,
+               df.create_time,
+               df.update_by,
+               df.update_time,
+               df.province_id,
+               df.linkman_name,
+               df.phone_number,
+               df.city_id,
+               df.confirm_time,
+               df.remark,
+               df.user_name,
+               concat_ws('-',sa.name,sa1.name) as area_arr
+        from dis_mfrs_prestore df
+                 left join sys_area sa on df.province_id = sa.area_id
+                 left join sys_area sa1 on df.city_id = sa1.area_id
+    </sql>
+
+    
+    <!--<select id="selectAuditMfrsPrestoreList"  parameterType="MfrsPrestore" resultMap="MfrsPrestoreResult">
+    	select mfrs_prestore_id,name,linkman_name,phone_number,update_time,mfrs_id,confirm_time from dis_mfrs_prestore  where del_flag = 9
+        <if test="name != null and name != '' ">and name like concat('%',#{name},'%') </if>
+        <if test="linkmanName != null  and linkmanName != '' ">and linkman_name like concat('%', #{linkmanName},'%')</if>
+        <if test="phoneNumber != null  and phoneNumber != '' ">and phone_number like concat('%',#{phoneNumber},'%')</if>
+    </select>-->
+    <select id="selectAuditMfrsPrestoreList"  parameterType="MfrsPrestore" resultMap="MfrsPrestoreResult">
+        SELECT
+        a.mfrs_prestore_id,
+        a.NAME,
+        a.linkman_name,
+        a.user_name,
+        a.phone_number,
+        a.update_time,
+        a.mfrs_id,
+        a.confirm_time,
+        a.create_time,
+        a.del_flag,
+        a.remark
+        FROM
+        dis_mfrs_prestore a, (SELECT
+        NAME,
+        MAX(update_time)update_time
+        FROM
+        dis_mfrs_prestore
+        GROUP BY NAME) b
+
+        WHERE
+        b.update_time = a.update_time and b.NAME=a.NAME and a.del_flag in (8,9)
+        <if test="name != null and name != '' ">and a.NAME like concat('%',#{name},'%') </if>
+        <if test="linkmanName != null  and linkmanName != '' ">and a.linkman_name like concat('%', #{linkmanName},'%')</if>
+        <if test="phoneNumber != null  and phoneNumber != '' ">and a.phone_number like concat('%',#{phoneNumber},'%')</if>
+        <if test="delFlag != null  and delFlag != '' ">and a.del_flag = #{delFlag}</if>
+        <if test="mfrsId == 0">and a.mfrs_id is null </if>
+        <if test="mfrsId == 1">and a.mfrs_id is not null </if>
+    </select>
+    
+    <update id="applyMfrsPrestore" parameterType="MfrsPrestore">
+    	update dis_mfrs_prestore set del_flag = 0 where mfrs_prestore_id = #{mfrsPrestoreId}
+    </update>
+    
+    <update id="reject" parameterType="Integer">
+        update dis_mfrs_prestore set del_flag = 8 where mfrs_prestore_id =  #{mfrsPrestoreId}
+    </update>
+    
+    <select id="selectMfrsPrestorePic" parameterType="Map" resultType="String">
+        select pic_filepath picFilepath from dis_mfrs_picture d left join sys_picture p on d.pic_id=p.pic_id
+        <where>
+        	<if test="mfrsPrestoreId != null "> and d.mfrs_prestore_id = #{mfrsPrestoreId}</if>
+            <if test="mfrsId != null "> and d.mfrs_id = #{mfrsId}</if>
+            <if test="type != null "> and p.type = #{type}</if>
+            and d.del_flag = 0 and p.del_flag = 0
+        </where>
+    </select>
+    
+    <select id="selectMfrsPrestoreById" parameterType="Integer" resultMap="MfrsPrestoreResult">
+        <include refid="selectMfrsVo"/>
+        where mfrs_prestore_id = #{mfrsPrestoreId}
+    </select>
+    
+    <update id="bindingPicToMfrs" parameterType="Map">
+    	update dis_mfrs_picture set mfrs_id = #{mfrsId} where mfrs_prestore_id = #{mfrsPrestoreId}
+    </update>
+
+    <update id="updateMfrsId" parameterType="Integer">
+        update dis_mfrs_prestore set mfrs_id=#{mfrsId} where mfrs_prestore_id=#{mfrsPrestoreId}
+    </update>
+    
+    <select id="selectMfrsIdCount" parameterType="integer" resultType="integer">
+        select count(*) from dis_mfrs_prestore where mfrs_id=#{mfrsId}
+    </select>
+
+    <select id="selectReviewAgainList" parameterType="MfrsPrestore" resultMap="MfrsPrestoreResult">
+        select mfrs_prestore_id,name,linkman_name,phone_number,create_time,mfrs_id,confirm_time from dis_mfrs_prestore  where del_flag = 9 and mfrs_id is not null
+    </select>
+
+    <update id="updateMfrsById" parameterType="MfrsPrestore">
+        update dis_mfrs_prestore
+        <trim prefix="SET" suffixOverrides=",">
+
+            <if test ="remark!=''and remark!=null">remark=#{remark},</if>
+         update_by=#{updateBy},update_time=#{updateTime}
+        </trim>
+         where mfrs_prestore_id=#{mfrsPrestoreId}
+    </update>
+</mapper>

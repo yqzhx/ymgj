@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
+<style>
+    .my-form {
+        padding: 20px 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<body class="white-bg">
+<form action="" class="form-horizontal my-form" id="form-company-add">
+    <div class="col-sm-5 col-sm-offset-1">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">联系人姓名：</label>
+            <div class="col-sm-6">
+                <input id="linkName" name="linkName" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">联系人座机：</label>
+            <div class="col-sm-6">
+                <input id="telephone" name="telephone" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">联系人手机：</label>
+            <div class="col-sm-6">
+                <input id="mobile" name="mobile" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">联系人邮箱：</label>
+            <div class="col-sm-6">
+                <input id="mail" name="mail" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">身份证号码：</label>
+            <div class="col-sm-6">
+                <input id="idCard" name="idCard" class="form-control" type="text" required>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-5">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">营业执照：</label>
+            <div class="col-sm-9">
+                <input type="hidden" name="zhizhao">
+                <input id="zhizhao" name="file" class="form-control" type="file">
+            </div>
+        </div>
+    </div>
+
+</form>
+<div th:include="include::footer"></div>
+<script>
+    var disAccountId = $.getUrlQuery('id');
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            add();
+        }
+    }
+
+    //表单验证
+    $("#form-company-add").validate({
+        rules: {}
+    });
+
+    //初始化上传图片
+    $.uploadFile({
+        el: "#zhizhao",
+        name: "zhizhao"
+    });
+
+    function add() {
+        var linkName = $('input[name=linkName]').val();
+        var telephone = $('input[name=telephone]').val();
+        var mobile = $('input[name=mobile]').val();
+        var mail = $('input[name=mail]').val();
+        var idCard = $('input[name=idCard]').val();
+        var zhizhao = $('input[name=zhizhao]').val();
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: ctx + "operate/company/add",
+            data: {
+                "linkName": linkName,
+                "telephone": telephone,
+                "mobile": mobile,
+                "mail": mail,
+                "idCard": idCard,
+                "imgUrl": zhizhao
+            },
+            async: false,
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            },
+            success: function (data) {
+                bindAccount(data)
+            }
+        });
+    }
+
+    // 绑定推广企业id和账号id
+    function bindAccount(res) {
+        $.ajax({
+            url: ctx + 'operate/account/edit',
+            type: 'POST',
+            data: {
+                disAccountId: disAccountId,
+                companyId: res.companyId
+            },
+            success: function (data) {
+                $.operate.successCallback(data);
+            },
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            }
+        })
+    }
+</script>
+</body>
+

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link rel="stylesheet" th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}">
+<link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form action="" class="form-horizontal" id="form-account-add">
+        <input type="hidden" name="accountId" th:value="${account.accountId}">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">账户名：</label>
+            <div class="col-sm-6">
+                <input id="loginName" name="loginName" class="form-control" type="text" th:value="${account.loginName}" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">密码：</label>
+            <div class="col-sm-6">
+                <input id="password" name="password" class="form-control" type="password" placeholder="请输入密码" required>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}"></script>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}"></script>
+<script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+<script type="text/javascript">
+    var prefix = ctx + "operate/account";
+
+    $("#form-account-add").validate({
+        rules:{
+            password:{
+                required:true,
+                isPassword:true
+            }
+        },
+        messages:{
+            password: {
+                isPassword:"请输入8~20位字符，至少包含一个字母和一个数字"
+            }
+        }
+    })
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/reset", $('#form-account-add').serialize());
+        }
+    }
+</script>
+</body>
+</html>

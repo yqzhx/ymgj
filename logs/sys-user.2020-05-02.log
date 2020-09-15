@@ -1,0 +1,2 @@
+11:33:50.099 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[测试企业][Error][此账户不存在]
+11:34:08.816 [pool-3-thread-1] INFO  sys-user - [run,108] - [127.0.0.1]内网IP[admin][Success][登录成功]

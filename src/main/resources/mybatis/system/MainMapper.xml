@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uustop.project.system.main.mapper.MainMapper">
+    <resultMap id="MainResult" type="Main">
+        <result property="countContract" column="countContract"/>
+        <result property="mfrsId" column="mfrs_id"/>
+        <result property="mfrsName" column="NAME"/>
+        <result property="companyId" column="company_id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="cdcName" column="cdc_name"/>
+        <result property="cdcId" column="cdc_id"></result>
+        <result property="Month" column="Month"/>
+        <result property="totalAmount" column="total_amount"/>
+    </resultMap>
+
+    <select id="selectContractCount" resultMap="MainResult">
+        SELECT count(*)                        countContract,
+               DATE_FORMAT(confirm_time, '%m') Month
+        FROM dis_contract
+        WHERE statistics_state &lt; 5
+          AND del_flag = 0
+          AND DATE_FORMAT(confirm_time, '%Y') = DATE_FORMAT(SYSDATE(), '%Y')
+        GROUP BY DATE_FORMAT(confirm_time, '%m')
+    </select>
+
+    <select id="selectMfrsContractCount" resultMap="MainResult">
+        SELECT dm.NAME,
+               aa.countContract,
+               aa.mfrs_id,
+               aa.total_amount
+        FROM dis_mfrs dm
+                 LEFT JOIN (
+            SELECT count(DISTINCT dcd.contract_id) countContract,
+                   dc.mfrs_id,
+                   sum(dcd.total_amount)           total_amount
+            FROM dis_contract dc
+                     LEFT JOIN dis_mfrs dm ON dm.mfrs_id = dc.mfrs_id
+                     LEFT JOIN dis_contract_details dcd ON dc.contract_id = dcd.contract_id
+            WHERE statistics_state &lt; 5
+              AND dc.del_flag = 0
+              AND DATE_FORMAT(dc.confirm_time, '%Y') = DATE_FORMAT(SYSDATE(), '%Y')
+              AND dcd.del_flag = 0
+            GROUP BY dc.mfrs_id
+            ORDER BY countContract DESC
+        ) aa ON dm.mfrs_id = aa.mfrs_id
+        ORDER BY aa.countContract desc
+        limit 0,5
+    </select>
+
+
+
+    <select id="selectTodayContract" resultType="Integer">
+        SELECT count(contract_id)
+        FROM dis_contract
+        WHERE DATE_FORMAT(confirm_time, '%Y%M%D') = DATE_FORMAT(SYSDATE(), '%Y%M%D')
+          and del_flag = 0
+          and statistics_state &lt; 5
+    </select>
+
+
+    <select id="selectHistoryContract" resultType="Integer">
+        SELECT count(contract_id)
+        FROM dis_contract
+        WHERE del_flag = 0
+          and statistics_state &lt; 5
+          AND DATE_FORMAT(confirm_time, '%Y') = DATE_FORMAT(SYSDATE(), '%Y')
+    </select>
+
+    <select id="selectDaiFaHuoContract" resultType="Integer">
+        SELECT count(contract_id)
+        FROM dis_contract
+        WHERE del_flag = 0
+          and statistics_state = 0
+
+          AND DATE_FORMAT(confirm_time, '%Y') = DATE_FORMAT(SYSDATE(), '%Y')
+    </select>
+
+    <select id="selectWeiHuiKuanContract" resultType="Integer">
+        SELECT count(contract_id)
+        FROM dis_contract
+        WHERE del_flag = 0
+            and statistics_state = 1
+           OR statistics_state = 2
+            AND DATE_FORMAT(confirm_time, '%Y') = DATE_FORMAT(SYSDATE(), '%Y')
+    </select>
+
+    <select id="selectAllAccount" resultType="Integer">
+        SELECT
+            count( ca.account_id )
+        FROM
+            cdc_account ca
+        WHERE
+            ca.del_flag = 0
+          and ca.user_type !=1
+          AND clinic_id IS NOT NULL UNION ALL
+        SELECT
+            count( ca.account_id )
+        FROM
+            cdc_account ca
+        WHERE
+            ca.del_flag = 0
+          and ca.user_type !=1
+          AND clinic_id IS NULL UNION ALL
+        SELECT
+            count( ma.account_id )
+        FROM
+            mfrs_account ma
+        WHERE
+            ma.del_flag = 0
+          and ma.user_type !=1 UNION ALL
+        SELECT
+            count( pa.account_id )
+        FROM
+            prom_account pa
+        WHERE
+            pa.del_flag = 0
+          and pa.user_type !=1
+    </select>
+
+
+</mapper>

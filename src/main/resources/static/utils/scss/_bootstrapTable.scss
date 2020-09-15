@@ -1,0 +1,31 @@
+.bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td {
+  padding: 12px 8px;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  line-height: 1.428571429;
+  font-size: 12px;
+}
+
+.table{
+  border: 1px solid #E1E6EB!important;
+  td{
+    color: #2b2b2b!important;
+  }
+}
+.table-striped .table>thead>tr>th, .table-striped .table>tbody>tr>th{
+  border-bottom: none!important;
+}
+
+.fixed-table-header {
+  background: #F5F6FA;
+  .table > thead:first-child > tr:first-child > th {
+    color: #141414;
+    font-weight: bold;
+    font-size: 12px;
+  }
+}
+
+.fixed-table-container{
+  border-bottom: none!important;
+}

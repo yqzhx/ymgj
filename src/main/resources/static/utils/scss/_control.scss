@@ -1,0 +1,32 @@
+.date-box{
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #e5e6e7;
+  font-size: 0;
+  .form-control{
+    height: 32px;
+    border:none;
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+    &:focus{
+      border:none!important;
+    }
+  }
+  .iconfont{
+    font-size: 20px;
+    vertical-align: middle;
+    margin: 0 8px;
+    cursor: pointer;
+    opacity: .6;
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+
+
+
+.clickable[readonly]{
+  background: #dce9ff;
+}
