@@ -85,9 +85,8 @@
     </sql>
 
     <select id="selectStudentPersonnelList" parameterType="StudentPersonnel" resultMap="StudentPersonnelResult">
-        select u.stu_user_id, u.stu_dept_id, u.stu_login_name, u.stu_user_name, u.stu_email, u.stu_phonenumber, u.stu_password,
-        u.stu_sex, u.stu_avatar, u.stu_salt, u.stu_status, u.stu_del_flag, u.stu_login_ip, u.stu_login_date, u.stu_create_by,
-        u.stu_create_time,u.stu_update_by,u.stu_update_time, u.stu_remark, d.stu_dept_name from student_personnel u
+        select u.stu_user_id, u.stu_dept_id, u.stu_login_name, u.stu_user_name, u.stu_email, u.stu_phonenumber, u.stu_password, u.stu_sex, u.stu_avatar, u.stu_salt, u.stu_status, u.stu_del_flag, u.stu_login_ip,
+        u.stu_login_date, u.stu_create_by, u.stu_create_time,u.stu_update_by,u.stu_update_time, u.stu_remark, d.stu_dept_name from student_personnel u
         left join student_class d on u.stu_dept_id = d.stu_dept_id
         <where>u.stu_del_flag = '0'
             <if test="stuLoginName != null and stuLoginName != ''">
@@ -97,21 +96,35 @@
                 )
             </if>
             <if test="stuStatus != null and stuStatus != ''">
-                AND u.stu_status =
-                #{stuStatus}
+                AND u.status =
+                #{status}
             </if>
-            <if test="stuPhonenumber != null and stuPhonenumber != ''">
-                AND u.stu_phonenumber like concat('%',
-                #{stuPhonenumber},
+            <if test="phonenumber != null and phonenumber != ''">
+                AND u.phonenumber like concat('%',
+                #{phonenumber},
                 '%'
                 )
             </if>
-            <if test="stuDeptId != null and stuDeptId != 0">
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &gt;= date_format(
+                #{params.beginTime},
+                '%y%m%d'
+                )
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &lt;= date_format(
+                #{params.endTime},
+                '%y%m%d'
+                )
+            </if>
+            <if test="deptId != null and deptId != 0">
                 AND
-                (u.stu_dept_id = #{stuDeptId} OR u.stu_dept_id IN (SELECT t.stu_dept_id FROM student_class t WHERE FIND_IN_SET (#{stuDeptId},ancestors)))
+                (u.dept_id = #{deptId} OR u.dept_id IN (SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors)))
             </if>
         </where>
-
+        order by u.update_time desc
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
     </select>
 
     <select id="selectUserNameByLoginName" resultMap="StudentPersonnelResult">
